@@ -1,18 +1,6 @@
-export type IconCategory =
-  | "language"
-  | "framework"
-  | "library"
-  | "runtime"
-  | "database"
-  | "cloud"
-  | "devops"
-  | "tool"
-  | "editor"
-  | "design"
-  | "mobile"
-  | "ai"
-  | "platform"
-  | "other";
+import { iconCategories, type IconCategory } from "./categories.js";
+
+export { iconCategories, type IconCategory };
 
 export type IconVariant = "original" | "mono";
 

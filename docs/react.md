@@ -29,8 +29,8 @@ Names are case-insensitive. Aliases work (`next` → `nextjs`). See [Icon catalo
 | `name` | `string` | — | Icon id or alias (required) |
 | `variant` | `"original"` \| `"mono"` | `"original"` | Color style |
 | `size` | `number` \| `string` | — | Width and height of the wrapper (px or CSS length) |
-| `color` | `string` | — | CSS color on the wrapper; tints `mono` via `currentColor` |
-| `title` | `string` | — | Accessible name; sets `role="img"` and `aria-label` |
+| `color` | `string` | — | CSS `color` on the wrapper. Mono icons pick it up through `currentColor`. Explicit fills in `original` artwork stay as drawn. |
+| `title` | `string` | — | Accessible name; sets `role="img"` and `aria-label`. Omit it for decorative icons (`aria-hidden="true"`). |
 | `className` | `string` | — | Applied to the outer wrapper |
 | `style` | `CSSProperties` | — | Inline styles on the wrapper |
 
@@ -45,7 +45,7 @@ Omit `size` and dimension the wrapper with utility classes. The inner SVG fills 
 <Icon name="nextjs" variant="mono" className="h-8 w-8 text-slate-700 dark:text-slate-200" />
 ```
 
-Do not combine `size={…}` with Tailwind width/height on the same icon — inline `size` wins.
+Do not combine `size={…}` with Tailwind width/height on the same icon. `size` writes inline width and height, which beat utility classes. A `style` prop is applied after `size`, so width or height in `style` overrides `size`.
 
 Common utilities:
 
@@ -71,16 +71,17 @@ If `mono` is missing for an icon, the original artwork is used.
 
 ```tsx
 import { Icon, type IconProps } from "@axcore/xicons-react";
+import type { IconVariant } from "@axcore/xicons";
 ```
 
-Variant type is re-exported from `@axcore/xicons` as `IconVariant`.
+`@axcore/xicons-react` exports `Icon` and `IconProps`. `IconVariant` comes from `@axcore/xicons`.
 
 ## Tree-shaking
 
-Import from the package entry only:
+Import the package entry:
 
 ```tsx
 import { Icon } from "@axcore/xicons-react";
 ```
 
-The registry ships with the core dependency; bundlers include what your import graph reaches.
+`getIconSvg` loads the whole generated registry. A bundler does not drop unused icon names from that module.

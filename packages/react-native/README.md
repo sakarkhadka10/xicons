@@ -1,4 +1,3 @@
-````md
 # @axcore/xicons-react-native
 
 React Native / Expo icon component for XIcons.
@@ -10,7 +9,6 @@ React Native / Expo icon component for XIcons.
 ```bash
 npm install @axcore/xicons-react-native react-native-svg
 ```
-````
 
 Also works with:
 
@@ -28,10 +26,11 @@ bun add @axcore/xicons-react-native react-native-svg
 
 ### Requirements
 
-- React `^19.3.0`
-- React Native `>= 0.78`
-- `react-native-svg`
-- Expo applications are supported
+- React `^19.3.0` (peer dependency)
+- React Native `>= 0.78` (peer dependency)
+- `react-native-svg` `>= 15` (dependency of this package)
+
+Install `react-native-svg` in the app as well so native autolinking sees it. Expo apps are supported.
 
 ---
 
@@ -107,19 +106,15 @@ Example with different sizes:
 
 ## Colors
 
-The `color` prop is useful for monochrome icons.
+`color` is a string. For `mono`, every `currentColor` in the SVG is replaced with that string. For `original`, `color` is ignored and the brand fills stay in the file.
 
 ```tsx
 <Icon name="react" variant="mono" size={28} color="#61DAFB" />
 ```
 
-You can use any valid React Native color value:
-
 ```tsx
 <Icon name="react" variant="mono" size={28} color="blue" />
 ```
-
-For `mono` icons, the provided color replaces `currentColor`.
 
 ---
 
@@ -157,7 +152,7 @@ This allows applications to safely render icons without requiring an exception f
 
 XIcons works with Expo applications.
 
-Install the package and its SVG peer dependency:
+Install the package and `react-native-svg`:
 
 ```bash
 npx expo install @axcore/xicons-react-native react-native-svg
@@ -309,7 +304,3 @@ MIT.
 Third-party logos and brand assets may be subject to their respective trademarks, copyrights, licenses, and brand guidelines.
 
 XIcons does not grant trademark rights to any depicted brand.
-
-```
-
-```

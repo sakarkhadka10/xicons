@@ -1,6 +1,13 @@
 import { access, readdir, readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { iconCategories } from "../../../packages/core/src/categories.ts";
+import {
+  assertAliasAvailable,
+  assertCanonicalNameAvailable,
+  assertIconMetadata,
+  assertSvg,
+} from "../../../packages/core/scripts/validate-icon.mjs";
 
 const iconsRoot = join(dirname(fileURLToPath(import.meta.url)), "../../../icons");
 
@@ -13,26 +20,21 @@ async function exists(path: string): Promise<boolean> {
   }
 }
 
-function validateSvg(relativePath: string, svg: string): void {
-  if (!svg.trim().startsWith("<svg")) {
-    throw new Error(`${relativePath}: must start with <svg`);
-  }
-  if (!svg.includes("viewBox=")) {
-    throw new Error(`${relativePath}: missing viewBox`);
-  }
-}
-
 const entries = await readdir(iconsRoot, { withFileTypes: true });
-const iconDirs = entries.filter((entry) => entry.isDirectory());
+const iconDirs = entries
+  .filter((entry) => entry.isDirectory())
+  .map((entry) => entry.name)
+  .sort();
 
 if (!iconDirs.length) {
   throw new Error("No icon directories found.");
 }
 
+const names = new Set<string>();
+const aliases = new Set<string>();
 let svgCount = 0;
 
-for (const dirent of iconDirs) {
-  const dirName = dirent.name;
+for (const dirName of iconDirs) {
   const iconDir = join(iconsRoot, dirName);
   const metadataPath = join(iconDir, "metadata.json");
 
@@ -40,17 +42,12 @@ for (const dirent of iconDirs) {
     throw new Error(`${dirName}: missing metadata.json`);
   }
 
-  const metadata = JSON.parse(await readFile(metadataPath, "utf8")) as {
-    name?: string;
-  };
+  const metadata = JSON.parse(await readFile(metadataPath, "utf8")) as unknown;
+  const meta = assertIconMetadata(dirName, metadata, iconCategories);
+  assertCanonicalNameAvailable(meta.name, names, aliases);
 
-  if ((metadata.name ?? dirName) !== dirName) {
-    throw new Error(`${dirName}/metadata.json: name must match directory`);
-  }
-
-  const originalPath = join(iconDir, "original.svg");
-  if (!(await exists(originalPath))) {
-    throw new Error(`${dirName}: missing original.svg`);
+  for (const alias of meta.aliases) {
+    assertAliasAvailable(meta.name, alias, names, aliases);
   }
 
   for (const variant of ["original", "mono"] as const) {
@@ -62,8 +59,10 @@ for (const dirent of iconDirs) {
       continue;
     }
 
-    const svg = await readFile(filePath, "utf8");
-    validateSvg(`${dirName}/${variant}.svg`, svg);
+    const svg = (await readFile(filePath, "utf8")).trim();
+    assertSvg(`${dirName}/${variant}.svg`, svg, {
+      requireCurrentColor: variant === "mono",
+    });
     svgCount += 1;
   }
 }
