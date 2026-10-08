@@ -1,6 +1,6 @@
 {
   "name": "@axcore/xicons-react-native",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React Native and Expo Icon component for XIcons.",
   "license": "MIT",
   "type": "module",
@@ -20,7 +20,10 @@
   "engines": {
     "node": ">=22.0.0"
   },
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "keywords": [
     "icons",
     "react-native",
