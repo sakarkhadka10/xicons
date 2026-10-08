@@ -4,7 +4,7 @@
 
 | Runtime | Packages |
 | --- | --- |
-| React 19+ | `@axcore/xicons-react` |
+| React ^19.3.0 | `@axcore/xicons-react` |
 | React Native ≥ 0.78 / Expo | `@axcore/xicons-react-native`, `react-native-svg` |
 | Node / bundlers | `@axcore/xicons` |
 
@@ -58,7 +58,7 @@ See [Core API](./core-api.md).
 If you are developing XIcons or testing before publish:
 
 ```bash
-cd /path/to/axcore-xicons
+cd /path/to/xicons
 pnpm install
 pnpm build
 ```
@@ -66,8 +66,8 @@ pnpm build
 In your app:
 
 ```bash
-pnpm add @axcore/xicons@file:/path/to/axcore-xicons/packages/core \
-         @axcore/xicons-react@file:/path/to/axcore-xicons/packages/react
+pnpm add @axcore/xicons@file:/path/to/xicons/packages/core \
+         @axcore/xicons-react@file:/path/to/xicons/packages/react
 ```
 
 Rebuild the monorepo after icon or API changes, then restart your app dev server.
@@ -75,7 +75,7 @@ Rebuild the monorepo after icon or API changes, then restart your app dev server
 ## CDN (local)
 
 ```bash
-cd /path/to/axcore-xicons
+cd /path/to/xicons
 pnpm --filter @axcore/xicons-cdn dev
 ```
 

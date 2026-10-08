@@ -1,4 +1,3 @@
-````md
 # XIcons
 
 [![CI](https://github.com/sakarkhadka10/xicons/actions/workflows/ci.yml/badge.svg)](https://github.com/sakarkhadka10/xicons/actions/workflows/ci.yml)
@@ -30,14 +29,13 @@ XIcons keeps the source of truth in one place:
           │            │            │
        <Icon />      <Icon />      URL/CDN
 ```
-````
 
 Each icon can provide:
 
-- **Original** — official/full-color artwork
+- **Original** — full-color artwork
 - **Mono** — `currentColor` version for theming
 - **Aliases** — convenient alternative names
-- **Metadata** — category, website, and source information
+- **Metadata** — title, category, website, and aliases
 - **Generated registry** — consistent access across packages
 - **Validation** — automated SVG and registry checks
 
@@ -106,24 +104,19 @@ See the [React Native documentation](./docs/react-native.md) for Expo setup and 
 
 ## SVG / CDN
 
-XIcons can also be used without installing a package.
+`@axcore/xicons-cdn` is a private app in `apps/cdn`. It composes catalog icons into one SVG. This repository does not deploy a public host, and `xicons.dev` is not a running service.
 
-For example:
+Run the server locally:
 
-```md
-![Tech Stack](https://xicons.dev/icons?i=react,nextjs&size=32&gap=8)
+```bash
+pnpm --filter @axcore/xicons-cdn dev
 ```
 
-You can use generated SVG URLs in:
+```text
+http://localhost:8787/icons?i=react,nextjs&size=32&gap=8
+```
 
-- README files
-- Documentation
-- Websites
-- GitHub profiles
-- Developer portfolios
-- Other places where an SVG URL is supported
-
-See the [CDN documentation](./docs/cdn.md) for available query parameters and usage.
+Self-host that app when you want an SVG URL for a README, docs site, or portfolio. See the [CDN documentation](./docs/cdn.md) for query parameters.
 
 ---
 
@@ -404,23 +397,19 @@ See the [Release Guide](./docs/release.md) for the maintainer workflow.
 ```text
 xicons/
 ├── apps/
-│   └── cdn/
-│
+│   └── cdn/                  @axcore/xicons-cdn (private)
 ├── icons/
 │   ├── react/
 │   └── nextjs/
-│
 ├── packages/
-│   ├── core/
-│   ├── react/
-│   ├── react-native/
-│   └── icon-validator/
-│
-├── scripts/
+│   ├── core/                 @axcore/xicons
+│   ├── react/                @axcore/xicons-react
+│   └── react-native/         @axcore/xicons-react-native
 ├── tools/
+│   └── icon-validator/       @axcore/xicons-icon-validator (private)
+├── scripts/
 ├── docs/
 ├── .github/
-│
 ├── CONTRIBUTING.md
 ├── LICENSE
 ├── README.md
@@ -450,7 +439,7 @@ Contributors should review the [contribution and licensing guidelines](./CONTRIB
 
 XIcons is actively under development.
 
-The project is currently expanding its icon catalog, tooling, documentation, and framework support.
+The catalog currently ships `react` and `nextjs`. New icons are added only when the source file and its redistribution terms are linked in the pull request. See [Contributing](./CONTRIBUTING.md).
 
 If you find a bug, want to request an icon, or have an idea for improving XIcons, please open an issue or Pull Request.
 

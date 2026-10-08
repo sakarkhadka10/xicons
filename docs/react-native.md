@@ -10,10 +10,10 @@ npm install @axcore/xicons-react-native react-native-svg
 
 Peer dependencies:
 
-- `react` ^19.3.0  
-- `react-native` ≥ 0.78  
+- `react` ^19.3.0
+- `react-native` ≥ 0.78
 
-Expo projects already include compatible React Native; install `react-native-svg` per [Expo docs](https://docs.expo.dev/versions/latest/sdk/svg/) if it is not present.
+`react-native-svg` is a direct dependency (`>= 15`). Install it in the app as well so native autolinking sees it. For Expo, use the [react-native-svg guide](https://docs.expo.dev/versions/latest/sdk/svg/) if the native module is not already linked.
 
 ## Usage
 

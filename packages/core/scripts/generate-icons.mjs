@@ -1,10 +1,20 @@
 import { access, readdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  assertAliasAvailable,
+  assertCanonicalNameAvailable,
+  assertIconMetadata,
+  assertSvg,
+  parseIconCategories,
+} from "./validate-icon.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const iconsRoot = join(here, "../../../icons");
 const outFile = join(here, "../src/icons.generated.ts");
+const categories = parseIconCategories(
+  await readFile(join(here, "../src/categories.ts"), "utf8"),
+);
 
 const VARIANTS = ["original", "mono"];
 
@@ -14,15 +24,6 @@ async function exists(path) {
     return true;
   } catch {
     return false;
-  }
-}
-
-function validateSvg(name, variant, svg) {
-  if (!svg.startsWith("<svg")) {
-    throw new Error(`${name}/${variant}.svg must start with <svg`);
-  }
-  if (!svg.includes("viewBox=")) {
-    throw new Error(`${name}/${variant}.svg is missing viewBox`);
   }
 }
 
@@ -45,25 +46,11 @@ for (const dirName of iconDirs) {
   const iconDir = join(iconsRoot, dirName);
   const metadataPath = join(iconDir, "metadata.json");
   const metadata = JSON.parse(await readFile(metadataPath, "utf8"));
-  const name = metadata.name ?? dirName;
+  const meta = assertIconMetadata(dirName, metadata, categories);
 
-  if (name !== dirName) {
-    throw new Error(
-      `${dirName}/metadata.json: name "${name}" must match directory "${dirName}"`,
-    );
-  }
-
-  if (names.has(name)) {
-    throw new Error(`Duplicate icon name: ${name}`);
-  }
-  names.add(name);
-
-  for (const alias of metadata.aliases ?? []) {
-    const key = alias.toLowerCase();
-    if (aliases.has(key) || names.has(key)) {
-      throw new Error(`${name}: alias "${alias}" conflicts with another icon`);
-    }
-    aliases.add(key);
+  assertCanonicalNameAvailable(meta.name, names, aliases);
+  for (const alias of meta.aliases) {
+    assertAliasAvailable(meta.name, alias, names, aliases);
   }
 
   /** @type {Record<string, string>} */
@@ -73,22 +60,24 @@ for (const dirName of iconDirs) {
     const svgPath = join(iconDir, `${variant}.svg`);
     if (!(await exists(svgPath))) {
       if (variant === "original") {
-        throw new Error(`${name}: missing required original.svg`);
+        throw new Error(`${meta.name}: missing required original.svg`);
       }
       continue;
     }
 
     const svg = (await readFile(svgPath, "utf8")).trim();
-    validateSvg(name, variant, svg);
+    assertSvg(`${meta.name}/${variant}.svg`, svg, {
+      requireCurrentColor: variant === "mono",
+    });
     variants[variant] = svg;
   }
 
-  icons[name] = {
-    name,
-    title: metadata.title,
-    category: metadata.category,
-    ...(metadata.website ? { website: metadata.website } : {}),
-    ...(metadata.aliases?.length ? { aliases: metadata.aliases } : {}),
+  icons[meta.name] = {
+    name: meta.name,
+    title: meta.title,
+    category: meta.category,
+    ...(meta.website ? { website: meta.website } : {}),
+    ...(meta.aliases.length ? { aliases: meta.aliases } : {}),
     variants,
   };
 }
