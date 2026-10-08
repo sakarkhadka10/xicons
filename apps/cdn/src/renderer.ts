@@ -1,7 +1,9 @@
 import {
+  DEFAULT_CDN_VARIANT,
   escapeXml,
   getIcon,
   parseViewBox,
+  resolveIconSvg,
   stripSvgWrapper,
   type IconVariant,
 } from "@axcore/xicons";
@@ -15,7 +17,7 @@ export interface RenderOptions {
 
 export function renderIcons({
   names,
-  variant = "original",
+  variant = DEFAULT_CDN_VARIANT,
   size = 48,
   gap = 12,
 }: RenderOptions): string {
@@ -30,7 +32,7 @@ export function renderIcons({
   const body = icons
     .map((icon, index) => {
       const x = index * (size + gap);
-      const svg = icon!.variants[variant] ?? icon!.variants.original;
+      const svg = resolveIconSvg(icon!, variant);
       const viewBox = parseViewBox(svg);
       const inner = stripSvgWrapper(svg);
 

@@ -17,7 +17,7 @@ const categories = parseIconCategories(
   await readFile(join(here, "../src/categories.ts"), "utf8"),
 );
 
-const VARIANTS = ["original", "mono"] as const;
+const VARIANTS = ["original", "mono", "branded"] as const;
 
 async function pathExists(path: string): Promise<boolean> {
   try {
@@ -55,6 +55,7 @@ for (const dirName of iconDirs) {
 
   let originalSvg: string | undefined;
   let monoSvg: string | undefined;
+  let brandedSvg: string | undefined;
 
   for (const variant of VARIANTS) {
     const svgPath = join(iconDir, `${variant}.svg`);
@@ -72,8 +73,10 @@ for (const dirName of iconDirs) {
 
     if (variant === "original") {
       originalSvg = svg;
-    } else {
+    } else if (variant === "mono") {
       monoSvg = svg;
+    } else {
+      brandedSvg = svg;
     }
   }
 
@@ -84,6 +87,7 @@ for (const dirName of iconDirs) {
   const variants: IconDefinition["variants"] = {
     original: originalSvg,
     ...(monoSvg ? { mono: monoSvg } : {}),
+    ...(brandedSvg ? { branded: brandedSvg } : {}),
   };
 
   icons[meta.name] = {

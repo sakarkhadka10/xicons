@@ -16,7 +16,19 @@ test("composes known names and aliases into one svg", () => {
   assert.match(svg, /viewBox="0 0 72 32"/);
   assert.match(svg, /aria-label="React"/);
   assert.match(svg, /aria-label="Next\.js"/);
+  assert.match(svg, /#252F3E/);
+});
+
+test("draws the original variant when requested", () => {
+  const svg = renderIcons({
+    names: ["react"],
+    variant: "original",
+    size: 32,
+    gap: 0,
+  });
+
   assert.match(svg, /#61DAFB/);
+  assert.doesNotMatch(svg, /#252F3E/);
 });
 
 test("draws the mono variant and skips unknown names", () => {

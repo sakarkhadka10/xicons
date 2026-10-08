@@ -1,6 +1,6 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import type { IconVariant } from "@axcore/xicons";
+import { DEFAULT_CDN_VARIANT, type IconVariant } from "@axcore/xicons";
 import { renderIcons } from "./renderer.js";
 
 const app = new Hono();
@@ -14,8 +14,7 @@ app.get("/icons", (c) => {
     .filter(Boolean)
     .slice(0, 50);
 
-  const variant: IconVariant =
-    c.req.query("variant") === "mono" ? "mono" : "original";
+  const variant = parseCdnVariant(c.req.query("variant"));
 
   const size = Math.min(
     Math.max(Number(c.req.query("size") ?? 48) || 48, 16),
@@ -35,6 +34,18 @@ app.get("/icons", (c) => {
     "X-Content-Type-Options": "nosniff",
   });
 });
+
+function parseCdnVariant(value: string | undefined): IconVariant {
+  const normalized = value?.trim().toLowerCase();
+  if (
+    normalized === "mono" ||
+    normalized === "original" ||
+    normalized === "branded"
+  ) {
+    return normalized;
+  }
+  return DEFAULT_CDN_VARIANT;
+}
 
 const port = Number(process.env.PORT ?? 8787);
 

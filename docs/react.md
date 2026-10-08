@@ -16,8 +16,8 @@ npm install @axcore/xicons-react
 import { Icon } from "@axcore/xicons-react";
 
 <Icon name="react" size={32} title="React" />;
-<Icon name="nextjs" variant="original" size={32} />;
-<Icon name="next" variant="mono" size={32} color="#171717" />;
+<Icon name="nextjs" size={32} color="#171717" />;
+<Icon name="next" variant="original" size={32} />;
 ```
 
 Names are case-insensitive. Aliases work (`next` → `nextjs`). See [Icon catalog](./icons.md).
@@ -27,7 +27,7 @@ Names are case-insensitive. Aliases work (`next` → `nextjs`). See [Icon catalo
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `name` | `string` | — | Icon id or alias (required) |
-| `variant` | `"original"` \| `"mono"` | `"original"` | Color style |
+| `variant` | `"original"` \| `"mono"` \| `"branded"` | `"mono"` | Color style |
 | `size` | `number` \| `string` | — | Width and height of the wrapper (px or CSS length) |
 | `color` | `string` | — | CSS `color` on the wrapper. Mono icons pick it up through `currentColor`. Explicit fills in `original` artwork stay as drawn. |
 | `title` | `string` | — | Accessible name; sets `role="img"` and `aria-label`. Omit it for decorative icons (`aria-hidden="true"`). |

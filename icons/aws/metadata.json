@@ -1,0 +1,7 @@
+{
+  "name": "aws",
+  "title": "AWS",
+  "category": "cloud",
+  "website": "https://aws.amazon.com",
+  "aliases": ["amazon-aws", "amazon-web-services"]
+}

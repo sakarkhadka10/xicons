@@ -2,7 +2,13 @@ import { iconCategories, type IconCategory } from "./categories.js";
 
 export { iconCategories, type IconCategory };
 
-export type IconVariant = "original" | "mono";
+export type IconVariant = "original" | "mono" | "branded";
+
+/** Default for npm packages, React, and direct `getIconSvg()` usage. */
+export const DEFAULT_ICON_VARIANT = "mono" satisfies IconVariant;
+
+/** Default for the CDN `/icons` endpoint (full-color badge artwork). */
+export const DEFAULT_CDN_VARIANT = "branded" satisfies IconVariant;
 
 export interface IconMetadata {
   readonly name: string;
@@ -16,6 +22,7 @@ export interface IconDefinition extends IconMetadata {
   readonly variants: {
     readonly original: string;
     readonly mono?: string;
+    readonly branded?: string;
   };
 }
 
