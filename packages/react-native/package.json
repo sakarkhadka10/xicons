@@ -1,0 +1,39 @@
+{
+  "name": "@axcore/xicons-react-native",
+  "version": "0.1.0",
+  "description": "React Native and Expo Icon component for XIcons.",
+  "license": "MIT",
+  "type": "module",
+  "files": ["dist", "README.md"],
+  "keywords": [
+    "icons",
+    "react-native",
+    "expo",
+    "svg",
+    "xicons",
+    "axcore"
+  ],
+  "peerDependencies": {
+    "react": "^19.3.0",
+    "react-native": ">=0.78"
+  },
+  "dependencies": {
+    "@axcore/xicons": "workspace:*",
+    "react-native-svg": ">=15"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0"
+  }
+}

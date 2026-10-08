@@ -1,0 +1,17 @@
+name: Icon request
+description: Request a technology or developer tool icon.
+title: "[Icon]: "
+labels: ["icon-request"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Icon name
+    validations:
+      required: true
+  - type: input
+    id: website
+    attributes:
+      label: Official website
+    validations:
+      required: true

@@ -1,0 +1,30 @@
+{
+  "name": "@axcore/xicons",
+  "version": "0.1.0",
+  "description": "Developer icon registry with original and mono SVG variants.",
+  "license": "MIT",
+  "type": "module",
+  "files": ["dist", "README.md"],
+  "keywords": [
+    "icons",
+    "svg",
+    "developer",
+    "tech-stack",
+    "registry",
+    "xicons",
+    "axcore"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "generate": "node scripts/generate-icons.mjs",
+    "build": "pnpm run generate && tsc -p tsconfig.json",
+    "lint": "pnpm run generate && tsc -p tsconfig.json --noEmit",
+    "typecheck": "pnpm run generate && tsc -p tsconfig.json --noEmit",
+    "test": "pnpm run generate && tsc -p tsconfig.json && node --test test/*.test.js"
+  }
+}

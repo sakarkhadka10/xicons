@@ -1,0 +1,27 @@
+{
+  "name": "xicons",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Open-source developer icon ecosystem by AXCore.",
+  "license": "MIT",
+  "packageManager": "pnpm@12.10.1",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "validate": "pnpm --filter @axcore/xicons-icon-validator validate && pnpm typecheck && pnpm lint && pnpm test",
+    "format": "prettier --write .",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "prettier": "3.6.2",
+    "turbo": "2.11.2",
+    "typescript": "5.9.3"
+  }
+}

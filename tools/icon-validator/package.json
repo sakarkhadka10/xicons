@@ -1,0 +1,1 @@
+{"name":"@axcore/xicons-icon-validator","version":"0.1.0","private":true,"type":"module","scripts":{"validate":"tsx src/index.ts"},"devDependencies":{"tsx":"^4.20.6"}}
