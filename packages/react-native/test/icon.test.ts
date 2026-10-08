@@ -23,14 +23,14 @@ test("renders a known icon at the default size", () => {
 
   assert.match(tag, /width="24"/);
   assert.match(tag, /height="24"/);
-  assert.match(html, /#61DAFB/);
+  assert.match(html, /currentColor/);
   assert.match(html, /viewBox/);
 });
 
 test("resolves aliases", () => {
-  assert.match(render({ name: "reactjs" }), /#61DAFB/);
-  assert.match(render({ name: "NEXT" }), /#000000/);
-  assert.match(render({ name: "next.js" }), /#000000/);
+  assert.match(render({ name: "reactjs" }), /currentColor/);
+  assert.match(render({ name: "NEXT" }), /currentColor/);
+  assert.match(render({ name: "next.js" }), /currentColor/);
 });
 
 test("renders original and mono variants", () => {

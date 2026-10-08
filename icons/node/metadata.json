@@ -1,0 +1,7 @@
+{
+  "name": "node",
+  "title": "Node.js",
+  "category": "library",
+  "website": "https://nodejs.org",
+  "aliases": ["nodejs", "node.js"]
+}

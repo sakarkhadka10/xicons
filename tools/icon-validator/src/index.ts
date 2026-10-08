@@ -50,7 +50,7 @@ for (const dirName of iconDirs) {
     assertAliasAvailable(meta.name, alias, names, aliases);
   }
 
-  for (const variant of ["original", "mono"] as const) {
+  for (const variant of ["original", "mono", "branded"] as const) {
     const filePath = join(iconDir, `${variant}.svg`);
     if (!(await exists(filePath))) {
       if (variant === "original") {

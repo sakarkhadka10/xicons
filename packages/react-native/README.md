@@ -67,9 +67,9 @@ XIcons supports two icon variants:
 <Icon name="react" variant="mono" size={28} />
 ```
 
-The default variant is `original`.
+The default variant is `mono` (`color` replaces `currentColor`).
 
-If a requested `mono` variant is unavailable, the core registry falls back to the `original` variant.
+Use `variant="original"` or `variant="branded"` when you need full-color artwork. Missing optional variants fall back to `original`.
 
 ---
 
@@ -78,7 +78,7 @@ If a requested `mono` variant is unavailable, the core registry falls back to th
 | Prop      | Type                   | Default      | Description                       |
 | --------- | ---------------------- | ------------ | --------------------------------- |
 | `name`    | `string`               | required     | Icon name or registered alias     |
-| `variant` | `"original" \| "mono"` | `"original"` | Icon variant                      |
+| `variant` | `"original" \| "mono" \| "branded"` | `"mono"` | Icon variant                      |
 | `size`    | `number`               | `24`         | Icon width and height             |
 | `color`   | `string`               | —            | Color applied to monochrome icons |
 

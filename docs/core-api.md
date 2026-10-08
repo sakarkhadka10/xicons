@@ -26,6 +26,9 @@ import {
   escapeXml,
   type IconDefinition,
   type IconMetadata,
+  DEFAULT_CDN_VARIANT,
+  DEFAULT_ICON_VARIANT,
+  resolveIconSvg,
   type IconVariant,
   type IconCategory,
   type IconName,
@@ -38,7 +41,9 @@ import {
 
 Returns the icon definition, including every variant SVG, or `undefined` when the name is unknown. `variant` does not remove the other SVG from the object. Use `getIconSvg` when you want one string.
 
-Passing `mono` for an icon that has no `mono.svg` still returns the definition. `getIconSvg` then returns `variants.original`.
+Passing `mono` or `branded` for an icon that lacks that file still returns the definition. `getIconSvg` then falls back via `resolveIconSvg` (mono → original, branded → original).
+
+Default variant for `getIconSvg(name)` is **`mono`** (`DEFAULT_ICON_VARIANT`). The CDN app defaults to **`branded`** (`DEFAULT_CDN_VARIANT`).
 
 ```ts
 const icon = getIcon("nextjs", "mono");
@@ -55,7 +60,7 @@ Returns a single SVG string for rendering.
 const svg = getIconSvg("react", "mono");
 ```
 
-Resolution order for markup: requested variant → `original` if variant missing.
+Resolution order for markup: use `resolveIconSvg(icon, variant)` — `mono` and `branded` fall back to `original` when optional files are absent.
 
 ### `hasIcon(name)`
 
@@ -87,7 +92,7 @@ Used by the CDN renderer; safe to reuse in custom tooling.
 
 ### `IconVariant`
 
-`"original" | "mono"`
+`"original" | "mono" | "branded"`
 
 ### `IconDefinition`
 
@@ -101,6 +106,7 @@ interface IconDefinition {
   variants: {
     original: string;
     mono?: string;
+    branded?: string;
   };
 }
 ```

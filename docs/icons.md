@@ -22,7 +22,7 @@ node --input-type=module -e "import { listIcons } from './packages/core/dist/ind
 ```tsx
 <Icon name="react" />
 <Icon name="reactjs" />
-<Icon name="next" variant="mono" />
+<Icon name="next" variant="original" />
 ```
 
 ```text
@@ -34,8 +34,9 @@ node --input-type=module -e "import { listIcons } from './packages/core/dist/ind
 
 | File | Role |
 | --- | --- |
-| `original.svg` | Full-color artwork (required) |
-| `mono.svg` | Single color via `currentColor` (optional; renderers fall back to original) |
+| `original.svg` | Full-color artwork on a transparent canvas (required) |
+| `mono.svg` | Single color via `currentColor` (optional; **default** for npm/React; falls back to `original`) |
+| `branded.svg` | Badge-style full-color artwork (optional; **default** for CDN; falls back to `original`) |
 
 ## Adding icons
 

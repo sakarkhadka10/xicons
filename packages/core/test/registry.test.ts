@@ -28,13 +28,20 @@ test("listIcons returns the bundled catalog", () => {
     assert.match(icon.variants.original, /viewBox=/);
     assert.equal(getIcon(icon.name), icon);
     assert.equal(getIcon(icon.name, "original")?.variants.original, icon.variants.original);
-    assert.equal(getIconSvg(icon.name), icon.variants.original);
+    assert.equal(
+      getIconSvg(icon.name),
+      icon.variants.mono ?? icon.variants.original,
+    );
     assert.equal(getIconSvg(icon.name, "original"), icon.variants.original);
     assert.equal(hasIcon(icon.name), true);
 
     if (icon.variants.mono) {
       assert.match(icon.variants.mono, /currentColor/);
       assert.equal(getIconSvg(icon.name, "mono"), icon.variants.mono);
+    }
+
+    if (icon.variants.branded) {
+      assert.equal(getIconSvg(icon.name, "branded"), icon.variants.branded);
     }
 
     for (const alias of icon.aliases ?? []) {
@@ -72,7 +79,8 @@ test("getIconSvg returns original and mono markup", () => {
   const original = getIconSvg("react", "original");
   const mono = getIconSvg("react", "mono");
 
-  assert.equal(getIconSvg("react"), original);
+  assert.equal(getIconSvg("react"), mono);
+  assert.equal(getIconSvg("react", "original"), original);
   assert.match(original ?? "", /#61DAFB/);
   assert.match(mono ?? "", /currentColor/);
   assert.notEqual(original, mono);

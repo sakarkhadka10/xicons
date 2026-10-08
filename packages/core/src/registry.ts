@@ -1,5 +1,10 @@
 import { icons } from "./icons.generated.js";
-import type { IconDefinition, IconName, IconVariant } from "./types.js";
+import {
+  DEFAULT_ICON_VARIANT,
+  type IconDefinition,
+  type IconName,
+  type IconVariant,
+} from "./types.js";
 
 function resolveIcon(name: IconName): IconDefinition | undefined {
   const normalized = name.trim().toLowerCase();
@@ -15,16 +20,36 @@ function resolveIcon(name: IconName): IconDefinition | undefined {
   );
 }
 
+/** Pick SVG markup for a variant, with sensible fallbacks when optional files are absent. */
+export function resolveIconSvg(
+  icon: IconDefinition,
+  variant: IconVariant,
+): string {
+  const { variants } = icon;
+
+  switch (variant) {
+    case "mono":
+      return variants.mono ?? variants.original;
+    case "branded":
+      return variants.branded ?? variants.original;
+    case "original":
+      return variants.original;
+  }
+}
+
 export function getIcon(
   name: IconName,
-  variant: IconVariant = "original",
+  variant: IconVariant = DEFAULT_ICON_VARIANT,
 ): IconDefinition | undefined {
   const icon = resolveIcon(name);
   if (!icon) {
     return undefined;
   }
 
-  if (variant === "mono" && !icon.variants.mono) {
+  if (
+    (variant === "mono" && !icon.variants.mono) ||
+    (variant === "branded" && !icon.variants.branded)
+  ) {
     return icon;
   }
 
@@ -37,14 +62,14 @@ export function getIcon(
 
 export function getIconSvg(
   name: IconName,
-  variant: IconVariant = "original",
+  variant: IconVariant = DEFAULT_ICON_VARIANT,
 ): string | undefined {
   const icon = getIcon(name, variant);
   if (!icon) {
     return undefined;
   }
 
-  return icon.variants[variant] ?? icon.variants.original;
+  return resolveIconSvg(icon, variant);
 }
 
 export function hasIcon(name: IconName): boolean {

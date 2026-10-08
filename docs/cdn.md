@@ -34,7 +34,7 @@ https://<your-host>/icons?i=react,nextjs&size=48&gap=12
 | Param | Default | Range | Description |
 | --- | --- | --- | --- |
 | `i` | — | max 50 names | Comma-separated icon names or aliases |
-| `variant` | `original` | `original`, `mono` | Which SVG variant to draw. Any other value is treated as `original`. |
+| `variant` | `branded` | `branded`, `original`, `mono` | Which SVG variant to draw. Omit or pass an unknown value for `branded`. |
 | `size` | `48` | 16–512 | Each icon cell size (px) |
 | `gap` | `12` | 0–128 | Horizontal gap between icons (px) |
 

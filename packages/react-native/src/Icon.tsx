@@ -1,4 +1,8 @@
-import { getIconSvg, type IconVariant } from "@axcore/xicons";
+import {
+  DEFAULT_ICON_VARIANT,
+  getIconSvg,
+  type IconVariant,
+} from "@axcore/xicons";
 import { SvgXml } from "react-native-svg";
 
 export interface IconProps {
@@ -10,7 +14,7 @@ export interface IconProps {
 
 export function Icon({
   name,
-  variant = "original",
+  variant = DEFAULT_ICON_VARIANT,
   size = 24,
   color,
 }: IconProps) {

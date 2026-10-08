@@ -18,12 +18,13 @@ test("renders a known icon with svg attributes and the default variant", () => {
   assert.match(html, /viewBox="0 0 24 24"/);
   assert.match(html, /width="100%"/);
   assert.match(html, /height="100%"/);
-  assert.match(html, /#61DAFB/);
+  assert.match(html, /currentColor/);
+  assert.doesNotMatch(html, /#61DAFB/);
   assert.match(html, /display:inline-flex/);
 });
 
 test("resolves aliases and ignores case", () => {
-  const canonical = render({ name: "react", variant: "original" });
+  const canonical = render({ name: "react" });
   assert.equal(render({ name: "reactjs" }), canonical);
   assert.equal(render({ name: "  ReAcT  " }), canonical);
   assert.match(render({ name: "next.js", variant: "mono" }), /currentColor/);
@@ -58,7 +59,11 @@ test("applies size, className, color, and style", () => {
   assert.match(tinted, /currentColor/);
   assert.match(tinted, /color:#112233/);
 
-  const originalTint = render({ name: "react", color: "#112233" });
+  const originalTint = render({
+    name: "react",
+    variant: "original",
+    color: "#112233",
+  });
   assert.match(originalTint, /#61DAFB/);
   assert.match(originalTint, /color:#112233/);
 
