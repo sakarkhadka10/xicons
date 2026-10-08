@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { renderIcons } from "../dist/renderer.js";
+import { renderIcons } from "../src/renderer.js";
 
 test("composes known names and aliases into one svg", () => {
   const svg = renderIcons({

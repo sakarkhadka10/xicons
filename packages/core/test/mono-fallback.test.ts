@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { icons } from "../dist/icons.generated.js";
-import { getIcon, getIconSvg } from "../dist/registry.js";
+import { icons } from "../src/icons.generated.js";
+import { getIcon, getIconSvg } from "../src/registry.js";
 
 test("getIconSvg falls back to original when mono markup is absent", () => {
   const icon = icons.react;

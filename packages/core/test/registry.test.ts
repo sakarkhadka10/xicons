@@ -9,7 +9,7 @@ import {
   listIcons,
   parseViewBox,
   stripSvgWrapper,
-} from "../dist/index.js";
+} from "../src/index.js";
 import { parseIconCategories } from "../scripts/validate-icon.js";
 
 test("listIcons returns the bundled catalog", () => {

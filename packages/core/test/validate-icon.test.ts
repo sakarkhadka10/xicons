@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { iconCategories } from "../dist/index.js";
+import { iconCategories } from "../src/index.js";
 import {
   assertAliasAvailable,
   assertCanonicalNameAvailable,

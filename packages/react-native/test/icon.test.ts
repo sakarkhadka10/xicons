@@ -3,11 +3,11 @@ import { register } from "node:module";
 import { test } from "node:test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import type { IconProps } from "../dist/Icon.js";
+import type { IconProps } from "../src/Icon.js";
 
 register(new URL("./svg-mock-loader.ts", import.meta.url));
 
-const { Icon } = await import("../dist/Icon.js");
+const { Icon } = await import("../src/Icon.js");
 
 function render(props: IconProps): string {
   return renderToStaticMarkup(createElement(Icon, props));

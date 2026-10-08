@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { Icon, type IconProps } from "../dist/Icon.js";
+import { Icon, type IconProps } from "../src/Icon.js";
 
 function render(props: IconProps): string {
   return renderToStaticMarkup(createElement(Icon, props));

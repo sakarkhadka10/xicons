@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { escapeXml, parseViewBox, stripSvgWrapper } from "../dist/index.js";
+import { escapeXml, parseViewBox, stripSvgWrapper } from "../src/index.js";
 
 test("parseViewBox reads double quotes, single quotes, and the fallback", () => {
   assert.equal(
