@@ -25,6 +25,7 @@
     "url": "git+https://github.com/sakarkhadka10/xicons.git"
   },
   "devDependencies": {
+    "@types/node": "^26.6.4",
     "husky": "^9.1.7",
     "prettier": "3.6.2",
     "turbo": "2.11.2",

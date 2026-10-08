@@ -19,6 +19,7 @@ import {
   getIcon,
   getIconSvg,
   hasIcon,
+  iconCategories,
   listIcons,
   parseViewBox,
   stripSvgWrapper,
@@ -35,7 +36,9 @@ import {
 
 ### `getIcon(name, variant?)`
 
-Returns metadata plus all variant SVG strings, or `undefined` if not found.
+Returns the icon definition, including every variant SVG, or `undefined` when the name is unknown. `variant` does not remove the other SVG from the object. Use `getIconSvg` when you want one string.
+
+Passing `mono` for an icon that has no `mono.svg` still returns the definition. `getIconSvg` then returns `variants.original`.
 
 ```ts
 const icon = getIcon("nextjs", "mono");
@@ -68,7 +71,7 @@ const all = listIcons();
 all.map((i) => i.name); // ["nextjs", "react", …]
 ```
 
-Names are normalized to lowercase at lookup time; catalog keys use canonical `name` from metadata.
+Names are trimmed and lowercased at lookup time. `IconName` is a `string`, not a generated union of catalog ids. Canonical names come from each icon's `name` field.
 
 ## SVG helpers
 
@@ -105,6 +108,8 @@ interface IconDefinition {
 ### `IconCategory`
 
 `language` · `framework` · `library` · `runtime` · `database` · `cloud` · `devops` · `tool` · `editor` · `design` · `mobile` · `ai` · `platform` · `other`
+
+The same list is exported as `iconCategories`.
 
 ## Lookup rules
 

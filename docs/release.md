@@ -43,14 +43,14 @@ All public packages share one version:
 - `@axcore/xicons-react`
 - `@axcore/xicons-react-native`
 
-Bump `version` in each `packages/*/package.json` (and keep them identical), commit, then tag:
+Bump `version` in each public package.json so the three versions stay identical, commit, then tag. Private packages (`@axcore/xicons-cdn`, `@axcore/xicons-icon-validator`, and the root workspace) are not part of that lockstep.
 
 ```bash
-git tag v0.1.0
-git push origin v0.1.0
+git tag v0.1.1
+git push origin v0.1.1
 ```
 
-The tag must match package versions (`v0.1.0` → `"0.1.0"`).
+The public packages are currently `0.1.1`, so the matching tag is `v0.1.1`. The tag must equal the `version` field (`v0.1.1` → `"0.1.1"`). Pushing a `v*.*.*` tag runs the publish job. Push a tag only when you mean to release.
 
 ### What gets published
 
@@ -93,18 +93,24 @@ Until trusted publishers are configured, the **publish** job will fail at authen
 
 Do not store npm access tokens in the repository or in pull request workflows.
 
-## Recommended GitHub settings
+## Merge policy
 
-Configure in **Settings → Branches** for `main` (manual):
+`main` is protected. Changes land through this path:
+
+1. Fork the repository and open a pull request into `main`.
+2. Required CI checks pass: `validate (22)` and `validate (24)`.
+3. A maintainer approves.
+4. Review conversations are resolved.
+5. The pull request is squash-merged.
+
+Do not push directly to `main`.
+
+The ruleset is configured on GitHub. It is not stored in this repository, and it should not be disabled to land a change. The settings that match this policy are:
 
 - Require a pull request before merging
-- Require status check **validate** (CI workflow)
-- Require branches to be up to date
-- Restrict who can push to `main` (optional)
-- Require conversation resolution before merging (optional)
+- Require at least one approval
+- Require conversation resolution
+- Require the CI status checks above
+- Allow squash merge
 
 Dependabot opens weekly update PRs for GitHub Actions and npm (see `.github/dependabot.yml`).
-
-## Branch protection note
-
-Branch protection cannot be enabled from this repository alone; apply the settings above in the GitHub UI.

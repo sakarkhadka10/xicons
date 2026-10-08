@@ -1,4 +1,3 @@
-````md
 # Contributing to XIcons
 
 Thank you for contributing to **XIcons**! ❤️
@@ -68,7 +67,6 @@ Search the repository first:
 ```bash
 find icons -maxdepth 2 -type f
 ```
-````
 
 You can also search by name:
 
@@ -87,7 +85,7 @@ Please avoid submitting duplicate icons unless there is a clear reason for anoth
 Make sure you have:
 
 - Node.js 22+
-- pnpm 12+
+- pnpm 12.10.1 (the version in the root `packageManager` field)
 - Git
 
 Check your versions:
@@ -177,29 +175,25 @@ The project is organized as a pnpm monorepo.
 ```text
 xicons/
 ├── apps/
-│   └── cdn/
-│
+│   └── cdn/                 @axcore/xicons-cdn (private, not published)
 ├── icons/
 │   ├── react/
 │   │   ├── original.svg
 │   │   ├── mono.svg
 │   │   └── metadata.json
-│   │
 │   └── nextjs/
 │       ├── original.svg
 │       ├── mono.svg
 │       └── metadata.json
-│
 ├── packages/
-│   ├── core/
-│   ├── react/
-│   ├── react-native/
-│   └── icon-validator/
-│
-├── scripts/
+│   ├── core/                @axcore/xicons
+│   ├── react/               @axcore/xicons-react
+│   └── react-native/        @axcore/xicons-react-native
 ├── tools/
+│   └── icon-validator/      @axcore/xicons-icon-validator (private)
+├── scripts/
+├── docs/
 ├── .github/
-│
 ├── CONTRIBUTING.md
 ├── README.md
 ├── package.json
@@ -315,25 +309,27 @@ Do not arbitrarily resize or distort an icon simply to force a particular viewBo
 
 # Metadata Requirements
 
-Each icon must have a `metadata.json`.
-
-Example:
+Each icon must have a `metadata.json`. Copy the shape of the existing icons. There is no `slug` field. The directory name is the canonical name.
 
 ```json
 {
-  "name": "GitHub",
-  "slug": "github",
-  "category": "developer",
-  "website": "https://github.com",
-  "aliases": ["github", "git-hub"]
+  "name": "react",
+  "title": "React",
+  "category": "framework",
+  "website": "https://react.dev",
+  "aliases": ["reactjs"]
 }
 ```
 
-The exact metadata schema is defined by the project's validator.
+| Field | Required | Rule |
+| --- | --- | --- |
+| `name` | yes | Exactly the directory name. Lowercase. This is the canonical id. |
+| `title` | yes | Human-readable label, such as `React` or `Next.js`. |
+| `category` | yes | One of the categories below. |
+| `website` | no | Product site. |
+| `aliases` | no | Other lookup strings. Not the canonical name, and not another icon's name or alias. |
 
-Always follow the existing icon metadata structure.
-
-If you are unsure about a metadata field, look at existing icons before submitting your contribution.
+`pnpm validate` rejects metadata that does not match this table. Look at `icons/react/metadata.json` before adding a new icon.
 
 ---
 
@@ -427,31 +423,35 @@ icons/
     └── vercel/
 ```
 
-Categories belong in metadata.
+Categories belong in metadata. The allowed values are:
+
+```text
+language, framework, library, runtime, database, cloud, devops,
+tool, editor, design, mobile, ai, platform, other
+```
+
+That list is `iconCategories` in `packages/core/src/categories.ts`. Do not invent a category in an icon PR. Add it to that list first if a new one is actually needed.
 
 ---
 
 # Licensing and Brand Assets
 
-This is extremely important.
+The XIcons code is MIT licensed. That license does not grant trademark rights, and it does not make someone else's logo MIT-licensed.
 
-Before submitting an icon, make sure you understand where the asset comes from and whether it can legally be redistributed.
+A technology mark is not redistributable just because a PNG or SVG is easy to find. Some brand guidelines allow redistribution with attribution. Some forbid modified artwork. A traced or redrawn logo is still the brand owner's artwork.
 
-Prefer official sources whenever possible.
+Before you add an icon:
 
-For brand and company logos:
+1. Start from an official asset, or from a file whose license allows redistribution in this repository.
+2. In the pull request, link the source file and the license or brand guideline you used.
+3. Say whether the SVG is unchanged, and what you changed for `mono.svg`.
+4. If the guideline is unclear, open an icon request. Do not upload the file.
 
-- Use the official brand asset when redistribution is permitted.
-- Check the organization's brand/logo guidelines.
-- Do not remove required trademark notices.
-- Do not modify a logo in a way that violates its brand guidelines.
-- Do not submit assets copied from random icon websites without checking their license.
+Do not add a logo by redrawing it from memory or from a screenshot.
 
-A contributor is responsible for providing accurate source information for submitted assets.
+Maintainers reject icons when the source or the redistribution right is missing, even when CI passes.
 
-If there is uncertainty about whether an asset can be redistributed, mention it in the Pull Request instead of assuming it is allowed.
-
-Maintainers may request the source or licensing information before accepting an icon.
+XIcons does not grant trademark rights to any depicted brand. Names and logos stay with their owners.
 
 ---
 
@@ -465,13 +465,17 @@ Do **not** manually edit:
 packages/core/src/icons.generated.ts
 ```
 
-After adding or changing icons, run the project's generator/validation workflow.
+Regenerate the registry from the repository root:
 
-The generated registry must remain synchronized with the contents of `icons/`.
+```bash
+pnpm --filter @axcore/xicons generate
+```
 
-CI checks this automatically.
+That command rewrites `packages/core/src/icons.generated.ts`. `pnpm validate` regenerates the same file. Commit the result with your icon. CI rejects a pull request when this command would change the file:
 
-If the generated registry changes after your icon is added, include the generated change in your Pull Request.
+```bash
+git diff --exit-code -- packages/core/src/icons.generated.ts
+```
 
 ---
 
@@ -483,18 +487,16 @@ Before opening a Pull Request, run:
 pnpm validate
 ```
 
-This runs the project's validation, type checking, linting, and tests.
+From the repository root, this runs:
 
-All checks must pass.
+1. Icon validation (`@axcore/xicons-icon-validator`)
+2. `pnpm typecheck`
+3. `pnpm lint`
+4. `pnpm test`
 
-You should see successful results for:
+Icon validation checks the directory name, `metadata.json`, `original.svg`, optional `mono.svg`, alias conflicts, `viewBox`, and that mono artwork uses `currentColor`. It also rejects SVG scripts. `original.svg` is required. `mono.svg` may be omitted; renderers then use the original artwork.
 
-```text
-icon validation
-typecheck
-lint
-tests
-```
+All of these commands must pass before you open the pull request.
 
 If validation fails, fix the problem before opening the Pull Request.
 
@@ -691,16 +693,16 @@ GitHub Actions will automatically run the project's CI checks.
 Before submitting a Pull Request, make sure:
 
 - [ ] The icon does not already exist.
-- [ ] The icon has the correct slug.
+- [ ] The directory name matches `metadata.json` `name`.
 - [ ] `original.svg` is included.
-- [ ] `mono.svg` is included.
-- [ ] `metadata.json` is included.
+- [ ] `mono.svg` is included, or the pull request explains why this icon has no mono variant.
+- [ ] `metadata.json` matches the schema above.
 - [ ] SVG files have valid `viewBox` values.
 - [ ] The monochrome icon uses `currentColor`.
 - [ ] The SVG contains no unsafe or unnecessary content.
 - [ ] Metadata is accurate.
-- [ ] The official/source website is provided where applicable.
-- [ ] Licensing/redistribution has been considered.
+- [ ] `website` is set when the product has a public site.
+- [ ] The pull request links the SVG source and the license or brand guideline.
 - [ ] The generated registry is synchronized.
 - [ ] `pnpm validate` passes.
 - [ ] `pnpm build` passes.
@@ -792,11 +794,11 @@ The maintainer will review:
 
 ## Metadata
 
-- Is the name correct?
-- Is the slug appropriate?
-- Are aliases useful?
-- Is the category appropriate?
-- Is the source website correct?
+- Does `name` match the directory?
+- Is `title` the name a person would read?
+- Are aliases useful, and do they avoid the canonical name?
+- Is `category` one of the allowed values?
+- Is `website` correct?
 
 ## Licensing
 

@@ -1,4 +1,3 @@
-````md
 # @axcore/xicons
 
 Framework-agnostic icon registry for **XIcons**.
@@ -14,7 +13,6 @@ It works with Node.js, browser applications, bundlers, and other JavaScript/Type
 ```bash
 npm install @axcore/xicons
 ```
-````
 
 Also works with:
 
@@ -132,11 +130,7 @@ Returns an icon definition or `undefined`.
 const icon = getIcon("react");
 ```
 
-Specify a variant:
-
-```ts
-const icon = getIcon("react", "mono");
-```
+Specify a variant when you call `getIconSvg`. `getIcon` always returns the full definition, including every variant that exists. `variant` does not select a single SVG string.
 
 Returns:
 
@@ -194,13 +188,15 @@ The core package also exports helpers for working with SVG markup.
 
 ### `parseViewBox`
 
-Parses an SVG `viewBox`.
+Reads the `viewBox` attribute from an SVG string. When the attribute is missing, it returns `0 0 24 24` unless you pass another fallback.
 
 ```ts
 import { parseViewBox } from "@axcore/xicons";
 
-const viewBox = parseViewBox("0 0 24 24");
+const viewBox = parseViewBox('<svg viewBox="0 0 24 24"></svg>');
 ```
+
+Passing a bare `"0 0 24 24"` string does not parse a viewBox. It misses the attribute and returns the fallback, which happens to be the same text.
 
 ---
 
@@ -211,19 +207,19 @@ Removes the outer `<svg>` wrapper while preserving the inner SVG markup.
 ```ts
 import { stripSvgWrapper } from "@axcore/xicons";
 
-const inner = stripSvgWrapper(svg);
+const inner = stripSvgWrapper('<svg viewBox="0 0 24 24"><circle cx="12"/></svg>');
 ```
 
 ---
 
 ### `escapeXml`
 
-Escapes XML-sensitive characters.
+Escapes `&`, `"`, `<`, and `>` for XML text and attributes.
 
 ```ts
 import { escapeXml } from "@axcore/xicons";
 
-const safe = escapeXml(value);
+const safe = escapeXml(`a <b> & "c"`);
 ```
 
 ---
@@ -247,7 +243,13 @@ Example:
 import type { IconDefinition, IconVariant } from "@axcore/xicons";
 ```
 
-The icon name types are generated from the registered icon catalog.
+`IconName` is a `string`. The package does not generate a union of icon ids. Canonical names and aliases come from `icons/*/metadata.json`.
+
+Allowed categories are also exported at runtime:
+
+```ts
+import { iconCategories, type IconCategory } from "@axcore/xicons";
+```
 
 ---
 
@@ -348,7 +350,3 @@ MIT.
 Third-party logos and brand assets may be subject to their respective trademarks, copyrights, licenses, and brand guidelines.
 
 XIcons does not grant trademark rights to any depicted brand.
-
-```
-
-```

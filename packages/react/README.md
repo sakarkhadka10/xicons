@@ -1,4 +1,3 @@
-````md
 # @axcore/xicons-react
 
 React 19+ component library for XIcons developer SVGs.
@@ -10,7 +9,6 @@ React 19+ component library for XIcons developer SVGs.
 ```bash
 npm install @axcore/xicons-react
 ```
-````
 
 Also works with:
 
@@ -28,8 +26,8 @@ bun add @axcore/xicons-react
 
 ### Requirements
 
-- React `^19.3.0`
-- `@axcore/xicons`
+- React `^19.3.0` (peer dependency)
+- `@axcore/xicons` is a dependency and is installed with this package
 
 ---
 
@@ -130,15 +128,13 @@ Do not combine:
 <Icon name="react" size={32} className="h-6 w-6" />
 ```
 
-When both are provided, `size` takes precedence.
+When both `size` and Tailwind width/height are set, the inline `size` styles win over the classes. A `style` prop is applied after `size`, so width or height in `style` overrides `size`.
 
 ---
 
 ## Colors
 
-The `color` prop can be used to control the wrapper color.
-
-This is especially useful with monochrome icons:
+The `color` prop sets the CSS `color` of the wrapper. Mono icons use `currentColor`, so they follow that value. Original artwork keeps its own fills. `color` does not rewrite those fills.
 
 ```tsx
 <Icon name="react" variant="mono" size={32} color="#61DAFB" />
@@ -357,7 +353,3 @@ MIT.
 Third-party logos and brand assets may be subject to their respective trademarks, copyrights, licenses, and brand guidelines.
 
 XIcons does not grant trademark rights to any depicted brand.
-
-```
-
-```

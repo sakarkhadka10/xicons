@@ -2,7 +2,8 @@
 
 ## Checklist
 - [ ] Icon is not already present
-- [ ] Redistribution/license checked
+- [ ] Source file and redistribution terms are linked
+- [ ] `metadata.json` name matches the directory
 - [ ] SVG follows XIcons specification
-- [ ] Validation passes
-- [ ] Metadata included
+- [ ] `pnpm validate` passes
+- [ ] Generated registry is committed if it changed

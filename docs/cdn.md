@@ -1,12 +1,8 @@
 # CDN & URL embedding
 
-Compose multiple icons into **one SVG** — useful for GitHub README tech stacks, static docs, and `<img src="…">` without JavaScript.
+Compose multiple icons into **one SVG** for a README, docs page, or `<img>` tag.
 
-Production (when deployed):
-
-```text
-https://xicons.dev/icons?i=react,nextjs&size=48&gap=12
-```
+This repository includes the server. It does not publish a hosted CDN. `xicons.dev` does not resolve. Run the local server below, or deploy `apps/cdn` and use your own origin.
 
 ## Local server
 
@@ -25,12 +21,20 @@ Base URL: `http://localhost:8787`
 | `GET` | `/health` | `{ "ok": true, "service": "xicons-cdn" }` |
 | `GET` | `/icons` | SVG sprite strip |
 
+## URL shape
+
+After you deploy the server, the icon route is:
+
+```text
+https://<your-host>/icons?i=react,nextjs&size=48&gap=12
+```
+
 ## `/icons` query parameters
 
 | Param | Default | Range | Description |
 | --- | --- | --- | --- |
 | `i` | — | max 50 names | Comma-separated icon names or aliases |
-| `variant` | `original` | `original`, `mono` | Which SVG variant to draw |
+| `variant` | `original` | `original`, `mono` | Which SVG variant to draw. Any other value is treated as `original`. |
 | `size` | `48` | 16–512 | Each icon cell size (px) |
 | `gap` | `12` | 0–128 | Horizontal gap between icons (px) |
 
@@ -47,14 +51,14 @@ Unknown names in `i` are skipped. If none resolve, the response is a minimal 1×
 Markdown:
 
 ```md
-![My stack](https://xicons.dev/icons?i=react,nextjs&size=32&gap=10)
+![My stack](http://localhost:8787/icons?i=react,nextjs&size=32&gap=10)
 ```
 
-HTML:
+HTML, using a host you deploy:
 
 ```html
 <img
-  src="https://xicons.dev/icons?i=react,nextjs&size=48"
+  src="https://<your-host>/icons?i=react,nextjs&size=48"
   alt="React and Next.js"
   height="48"
 />

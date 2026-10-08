@@ -9,7 +9,13 @@ Icons are added under `icons/{name}/` in the repository and compiled into `@axco
 | `react` | React | `reactjs` | original, mono |
 | `nextjs` | Next.js | `next`, `next.js` | original, mono |
 
-Lookup is always case-insensitive.
+Lookup is case-insensitive. Update this table in the same pull request that adds an icon. It is maintained by hand.
+
+Print the generated catalog from the repository root after `pnpm build`:
+
+```bash
+node --input-type=module -e "import { listIcons } from './packages/core/dist/index.js'; console.table(listIcons().map((icon) => ({ name: icon.name, title: icon.title, aliases: (icon.aliases ?? []).join(', ') })))"
+```
 
 ## Usage examples
 
@@ -28,18 +34,9 @@ Lookup is always case-insensitive.
 
 | File | Role |
 | --- | --- |
-| `original.svg` | Brand colors (required) |
-| `mono.svg` | Single color via `currentColor` (recommended) |
+| `original.svg` | Full-color artwork (required) |
+| `mono.svg` | Single color via `currentColor` (optional; renderers fall back to original) |
 
 ## Adding icons
 
-See [Contributing](../CONTRIBUTING.md). After merge, run `pnpm build` in the monorepo to regenerate the registry.
-
-When the catalog grows, this table will be generated automatically; until then, run:
-
-```bash
-pnpm --filter @axcore/xicons build
-node -e "import { listIcons } from '@axcore/xicons'; console.table(listIcons().map(i=>({name:i.name,aliases:(i.aliases??[]).join(', ')})))"
-```
-
-(from repo root with workspace resolution)
+See [Contributing](../CONTRIBUTING.md). Add files under `icons/{name}/`, run `pnpm validate`, and commit the regenerated `packages/core/src/icons.generated.ts` in the same pull request. Do not edit that file by hand.
