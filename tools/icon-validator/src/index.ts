@@ -1,13 +1,13 @@
 import { access, readdir, readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { iconCategories } from "../../../packages/core/src/categories.ts";
+import { iconCategories } from "../../../packages/core/src/categories.js";
 import {
   assertAliasAvailable,
   assertCanonicalNameAvailable,
   assertIconMetadata,
   assertSvg,
-} from "../../../packages/core/scripts/validate-icon.mjs";
+} from "../../../packages/core/scripts/validate-icon.js";
 
 const iconsRoot = join(dirname(fileURLToPath(import.meta.url)), "../../../icons");
 

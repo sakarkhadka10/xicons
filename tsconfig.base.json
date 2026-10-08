@@ -1,1 +1,21 @@
-{"compilerOptions":{"target":"ES2022","strict":true,"noUncheckedIndexedAccess":true,"exactOptionalPropertyTypes":true,"verbatimModuleSyntax":true,"module":"ESNext","moduleResolution":"Bundler","skipLibCheck":true,"declaration":true,"declarationMap":true,"sourceMap":true}}
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "verbatimModuleSyntax": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true
+  }
+}

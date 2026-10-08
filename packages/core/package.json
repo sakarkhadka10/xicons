@@ -40,10 +40,13 @@
     }
   },
   "scripts": {
-    "generate": "node scripts/generate-icons.mjs",
+    "generate": "tsx scripts/generate-icons.ts",
     "build": "pnpm run generate && tsc -p tsconfig.json",
-    "lint": "pnpm run generate && tsc -p tsconfig.json --noEmit",
-    "typecheck": "pnpm run generate && tsc -p tsconfig.json --noEmit",
-    "test": "pnpm run generate && tsc -p tsconfig.json && node --test test/*.test.js"
+    "lint": "pnpm run generate && tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit",
+    "typecheck": "pnpm run generate && tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit",
+    "test": "pnpm run generate && tsc -p tsconfig.json && node --import tsx --test test/*.test.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.6"
   }
 }
