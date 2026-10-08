@@ -1,6 +1,6 @@
 {
   "name": "@axcore/xicons-react-native",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "React Native and Expo Icon component for XIcons.",
   "license": "MIT",
   "type": "module",
