@@ -1,151 +1,1002 @@
+````md
 # Contributing to XIcons
 
-Thank you for helping grow the catalog. This document describes how icons are defined, validated, and shipped so every contribution fits the same pipeline.
+Thank you for contributing to **XIcons**! ❤️
 
-User-facing docs live in [`docs/`](./docs/README.md). Package readmes under `packages/*/README.md` are written for npm.
+XIcons is an open-source icon ecosystem designed to provide consistent, developer-friendly icons across web, React, React Native, and CDN environments.
 
-## Before you open a PR
+We welcome:
 
-1. **Search** the repo and existing PRs — duplicate icons are rejected.
-2. **Confirm rights** — you may only submit artwork you are allowed to redistribute. Official logos often require permission or must follow brand guidelines. When in doubt, open an issue first.
-3. **Prefer accuracy** — `original` variants should match widely recognized brand colors; `mono` variants should be clean silhouettes using `currentColor` only (no hard-coded fills except transparent/none).
+- New icons
+- Icon metadata improvements
+- Bug fixes
+- Validator improvements
+- Documentation improvements
+- Developer experience improvements
+- Tests and tooling improvements
 
-## How the pipeline works
+The most important rule is simple:
 
-```text
-icons/{name}/          ← you edit these
-        ↓
-generate-icons.mjs     ← build step (packages/core)
-        ↓
-icons.generated.ts     ← generated on build (do not hand-edit)
-        ↓
-@axcore/xicons         ← getIcon / getIconSvg / listIcons
-        ↓
-React · React Native · CDN
+> **Every change goes through a Pull Request.**
+
+The `main` branch is protected. Contributors should never push directly to `main`.
+
+---
+
+## Table of Contents
+
+- [Before You Start](#before-you-start)
+- [Development Setup](#development-setup)
+- [Fork the Repository](#fork-the-repository)
+- [Repository Structure](#repository-structure)
+- [Adding an Icon](#adding-an-icon)
+- [Icon Directory Structure](#icon-directory-structure)
+- [SVG Requirements](#svg-requirements)
+- [Metadata Requirements](#metadata-requirements)
+- [Icon Naming](#icon-naming)
+- [Aliases](#aliases)
+- [Categories](#categories)
+- [Licensing and Brand Assets](#licensing-and-brand-assets)
+- [Generating the Icon Registry](#generating-the-icon-registry)
+- [Validation](#validation)
+- [Building the Project](#building-the-project)
+- [Creating a Branch](#creating-a-branch)
+- [Keeping Your Branch Updated](#keeping-your-branch-updated)
+- [Commit Messages](#commit-messages)
+- [Opening a Pull Request](#opening-a-pull-request)
+- [Pull Request Checklist](#pull-request-checklist)
+- [Review Process](#review-process)
+- [What CI Checks](#what-ci-checks)
+- [Maintainer Review](#maintainer-review)
+- [After Merge](#after-merge)
+- [Release Process](#release-process)
+- [Adding Multiple Icons](#adding-multiple-icons)
+- [Improving XIcons](#improving-xicons)
+- [Reporting Problems](#reporting-problems)
+- [Requesting an Icon](#requesting-an-icon)
+- [Code of Conduct](#code-of-conduct)
+- [Questions](#questions)
+
+---
+
+# Before You Start
+
+Before adding an icon, please check whether the icon already exists.
+
+Search the repository first:
+
+```bash
+find icons -maxdepth 2 -type f
+```
+````
+
+You can also search by name:
+
+```bash
+find icons -iname "*github*"
 ```
 
-Running `pnpm build` or `pnpm validate` always regenerates the registry from `icons/`.
+Please avoid submitting duplicate icons unless there is a clear reason for another variant.
 
-If you change files under `icons/`, commit the updated `packages/core/src/icons.generated.ts` (CI fails if it is out of sync).
+---
 
-## CI and pre-commit
+# Development Setup
 
-- **Husky** (`.husky/pre-commit`) runs `pnpm validate` before each commit.
-- **GitHub Actions** (`.github/workflows/ci.yml`) runs on pull requests and `main`: `pnpm validate`, generated-file check, `pnpm build`, and `pnpm pack:verify`.
+## Requirements
 
-Do not bypass hooks with `--no-verify` unless a maintainer explicitly agrees.
+Make sure you have:
 
-## Adding a new icon
+- Node.js 22+
+- pnpm 12+
+- Git
 
-### 1. Create a directory
+Check your versions:
 
-The folder name **must** equal `metadata.json` → `name` (lowercase, no spaces).
-
-```text
-icons/vite/
-  metadata.json
-  original.svg
-  mono.svg          # strongly recommended
+```bash
+node --version
+pnpm --version
+git --version
 ```
 
-### 2. Write `metadata.json`
+---
 
-| Field | Required | Notes |
-| --- | --- | --- |
-| `name` | Yes | Stable ID; must match directory name |
-| `title` | Yes | Human label (e.g. `"Next.js"`) |
-| `category` | Yes | One of: `language`, `framework`, `library`, `runtime`, `database`, `cloud`, `devops`, `tool`, `editor`, `design`, `mobile`, `ai`, `platform`, `other` |
-| `website` | No | Official project URL |
-| `aliases` | No | Alternate lookup strings (lowercase recommended). Must not collide with another icon’s `name` or alias |
+# Fork the Repository
+
+If you are not a maintainer, start by creating a **fork** of the XIcons repository on GitHub.
+
+You should not push directly to the official XIcons repository.
+
+After creating your fork, clone **your fork**:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/xicons.git
+cd xicons
+```
+
+Replace `YOUR_USERNAME` with your GitHub username.
+
+For example:
+
+```bash
+git clone https://github.com/johndoe/xicons.git
+cd xicons
+```
+
+Install dependencies:
+
+```bash
+pnpm install
+```
+
+---
+
+## Add the Upstream Repository
+
+Add the official XIcons repository as `upstream`:
+
+```bash
+git remote add upstream https://github.com/sakarkhadka10/xicons.git
+```
+
+Check your remotes:
+
+```bash
+git remote -v
+```
+
+You should have something similar to:
+
+```text
+origin    https://github.com/YOUR_USERNAME/xicons.git
+upstream  https://github.com/sakarkhadka10/xicons.git
+```
+
+### What these mean
+
+- `origin` → your fork
+- `upstream` → official XIcons repository
+
+You push your changes to:
+
+```text
+origin
+```
+
+You create Pull Requests against:
+
+```text
+upstream/main
+```
+
+---
+
+# Repository Structure
+
+The project is organized as a pnpm monorepo.
+
+```text
+xicons/
+├── apps/
+│   └── cdn/
+│
+├── icons/
+│   ├── react/
+│   │   ├── original.svg
+│   │   ├── mono.svg
+│   │   └── metadata.json
+│   │
+│   └── nextjs/
+│       ├── original.svg
+│       ├── mono.svg
+│       └── metadata.json
+│
+├── packages/
+│   ├── core/
+│   ├── react/
+│   ├── react-native/
+│   └── icon-validator/
+│
+├── scripts/
+├── tools/
+├── .github/
+│
+├── CONTRIBUTING.md
+├── README.md
+├── package.json
+└── pnpm-workspace.yaml
+```
+
+The `icons/` directory is the source of truth for icon assets.
+
+---
+
+# Adding an Icon
+
+Each icon should have its own directory:
+
+```text
+icons/<icon-slug>/
+```
+
+For example:
+
+```text
+icons/github/
+├── original.svg
+├── mono.svg
+└── metadata.json
+```
+
+---
+
+# Icon Directory Structure
+
+Every icon should contain:
+
+```text
+original.svg
+mono.svg
+metadata.json
+```
+
+## `original.svg`
+
+This is the full-color or brand version of the icon.
+
+Example:
+
+```xml
+<svg
+  viewBox="0 0 24 24"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  ...
+</svg>
+```
+
+Use the official colors where the asset is legally permitted for redistribution.
+
+---
+
+## `mono.svg`
+
+This is the monochrome version.
+
+It should use:
+
+```text
+currentColor
+```
+
+where the icon's color needs to inherit from the consuming application.
+
+Example:
+
+```xml
+<svg
+  viewBox="0 0 24 24"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path fill="currentColor" d="..." />
+</svg>
+```
+
+Do not hard-code a single arbitrary color into the monochrome version.
+
+---
+
+# SVG Requirements
+
+All SVG files should:
+
+- Be valid SVG
+- Include a valid `viewBox`
+- Use clean SVG markup
+- Avoid unnecessary metadata
+- Avoid embedded raster images
+- Avoid scripts
+- Avoid external resources
+- Avoid unnecessary editor-specific data
+- Avoid unsafe SVG features
+- Use paths/shapes that render consistently
+- Preserve the intended visual appearance
+
+Prefer:
+
+```xml
+viewBox="0 0 24 24"
+```
+
+or the appropriate official viewBox for the icon.
+
+Do not arbitrarily resize or distort an icon simply to force a particular viewBox.
+
+---
+
+# Metadata Requirements
+
+Each icon must have a `metadata.json`.
 
 Example:
 
 ```json
 {
-  "name": "vite",
-  "title": "Vite",
-  "category": "tool",
-  "website": "https://vite.dev",
-  "aliases": ["vitejs"]
+  "name": "GitHub",
+  "slug": "github",
+  "category": "developer",
+  "website": "https://github.com",
+  "aliases": ["github", "git-hub"]
 }
 ```
 
-### 3. Author SVGs
+The exact metadata schema is defined by the project's validator.
 
-Both files are root-level `<svg>` elements.
+Always follow the existing icon metadata structure.
 
-**Shared rules**
+If you are unsure about a metadata field, look at existing icons before submitting your contribution.
 
-- Include `viewBox="0 0 24 24"` (24×24 coordinate system).
-- No scripts, foreign objects, or external references (`href` to remote URLs).
-- Keep paths minimal; avoid editor cruft (unused defs, random ids if possible).
-- File must start with `<svg` after trim.
+---
 
-**`original.svg`**
+# Icon Naming
 
-- Use the brand’s recognizable colors.
-- Required for every icon.
+The directory name is the canonical icon slug.
 
-**`mono.svg`**
+Use:
 
-- Single-color artwork: use `fill="currentColor"` and/or `stroke="currentColor"`.
-- Do not embed brand hex colors in `mono` (consumers supply color via CSS or the `color` prop).
-- Optional at the file level, but expected for icons intended for dark/light UI themes.
+```text
+lowercase
+```
 
-Reference implementations: [`icons/react/`](./icons/react), [`icons/nextjs/`](./icons/nextjs).
+and prefer:
 
-### 4. Validate locally
+```text
+kebab-case
+```
 
-From the repository root:
+Examples:
+
+```text
+github
+nextjs
+google-drive
+visual-studio-code
+```
+
+Avoid:
+
+```text
+GitHub
+GitHubIcon
+github_icon
+githubIcon
+```
+
+The canonical slug should be:
+
+- Predictable
+- URL-friendly
+- Filesystem-friendly
+- Easy to type
+- Unique
+
+---
+
+# Aliases
+
+Aliases can be added when an icon is commonly known by multiple names.
+
+For example:
+
+```json
+{
+  "aliases": ["github", "git-hub"]
+}
+```
+
+Do not add random or speculative aliases.
+
+Aliases should represent meaningful alternative names developers are likely to search for.
+
+---
+
+# Categories
+
+Icons use metadata categories.
+
+Do not create a new directory solely because an icon belongs to a different category.
+
+For example:
+
+```text
+icons/
+├── github/
+├── docker/
+├── npm/
+└── vercel/
+```
+
+Not:
+
+```text
+icons/
+├── developer/
+│   ├── github/
+│   └── docker/
+│
+└── hosting/
+    └── vercel/
+```
+
+Categories belong in metadata.
+
+---
+
+# Licensing and Brand Assets
+
+This is extremely important.
+
+Before submitting an icon, make sure you understand where the asset comes from and whether it can legally be redistributed.
+
+Prefer official sources whenever possible.
+
+For brand and company logos:
+
+- Use the official brand asset when redistribution is permitted.
+- Check the organization's brand/logo guidelines.
+- Do not remove required trademark notices.
+- Do not modify a logo in a way that violates its brand guidelines.
+- Do not submit assets copied from random icon websites without checking their license.
+
+A contributor is responsible for providing accurate source information for submitted assets.
+
+If there is uncertainty about whether an asset can be redistributed, mention it in the Pull Request instead of assuming it is allowed.
+
+Maintainers may request the source or licensing information before accepting an icon.
+
+---
+
+# Generating the Icon Registry
+
+The icon registry is generated from the source icons.
+
+Do **not** manually edit:
+
+```text
+packages/core/src/icons.generated.ts
+```
+
+After adding or changing icons, run the project's generator/validation workflow.
+
+The generated registry must remain synchronized with the contents of `icons/`.
+
+CI checks this automatically.
+
+If the generated registry changes after your icon is added, include the generated change in your Pull Request.
+
+---
+
+# Validation
+
+Before opening a Pull Request, run:
 
 ```bash
 pnpm validate
 ```
 
-This runs, in order:
+This runs the project's validation, type checking, linting, and tests.
 
-1. `@axcore/xicons-icon-validator` — structure and SVG checks under `icons/`
-2. Typecheck across the monorepo (depends on a fresh `@axcore/xicons` build)
-3. Lint
-4. Unit tests on the registry
+All checks must pass.
 
-Fix any error before pushing. Common failures:
+You should see successful results for:
 
-| Error | Fix |
-| --- | --- |
-| `name must match directory` | Rename folder or fix `metadata.json` → `name` |
-| `alias conflicts` | Choose a unique alias |
-| `missing original.svg` | Add required variant |
-| `missing viewBox` | Add `viewBox="0 0 24 24"` |
-
-To regenerate the registry without a full monorepo build:
-
-```bash
-pnpm --filter @axcore/xicons generate
+```text
+icon validation
+typecheck
+lint
+tests
 ```
 
-## Pull request guidelines
+If validation fails, fix the problem before opening the Pull Request.
 
-- **One icon per PR** when possible — easier review and licensing audit.
-- Fill out [`.github/PULL_REQUEST_TEMPLATE.md`](./.github/PULL_REQUEST_TEMPLATE.md).
-- State the **license / trademark** basis for the artwork (link to brand guidelines, permission, or public media kit if applicable).
-- Do not commit changes only under `packages/core/dist/` — dist is build output; source changes belong in `icons/` and hand-written package code.
+---
 
-## Changing existing icons
+# Building the Project
 
-- Treat renames as breaking: update `name` only with strong justification and a migration note.
-- Visual tweaks to `original` should stay faithful to the brand; note intentional corrections in the PR description.
-- Regenerate and run `pnpm validate` after any SVG or metadata edit.
+You can also run the full build:
 
-## Code contributions (non-icon)
+```bash
+pnpm build
+```
 
-- Follow existing TypeScript style (`strict`, ES modules, `.js` extensions in relative imports).
-- Keep packages thin: registry logic stays in `@axcore/xicons`; UI wrappers stay in React / RN packages; HTTP rendering stays in `apps/cdn`.
-- Add or update tests in `packages/core/test/` when changing lookup or SVG helper behavior.
+This ensures the packages can be built successfully.
 
-## Questions
+You normally do not need to run npm publishing commands when contributing an icon.
 
-- **Icon request** — use the [icon request issue template](./.github/ISSUE_TEMPLATE/icon-request.yml).
-- **Licensing uncertainty** — open an issue before spending time on artwork.
+---
 
-We appreciate focused, reviewable contributions.
+# Creating a Branch
+
+Never work directly on `main`.
+
+First make sure your local `main` is up to date:
+
+```bash
+git checkout main
+git fetch upstream
+git pull upstream main
+```
+
+Then create a new branch:
+
+```bash
+git checkout -b feat/add-github-icon
+```
+
+Recommended branch prefixes:
+
+```text
+feat/
+fix/
+docs/
+test/
+refactor/
+chore/
+```
+
+Examples:
+
+```text
+feat/add-github-icon
+feat/add-docker-icon
+fix/icon-validator
+docs/improve-contributing
+test/add-registry-tests
+```
+
+---
+
+# Keeping Your Branch Updated
+
+If your Pull Request stays open for a while and `main` has changed, update your branch before requesting final review.
+
+First fetch the latest upstream changes:
+
+```bash
+git fetch upstream
+```
+
+Then update your branch:
+
+```bash
+git checkout main
+git pull upstream main
+git checkout feat/add-github-icon
+git merge main
+```
+
+Resolve any conflicts if necessary.
+
+Then run:
+
+```bash
+pnpm validate
+pnpm build
+```
+
+Push the updated branch:
+
+```bash
+git push origin feat/add-github-icon
+```
+
+Your Pull Request will automatically update.
+
+---
+
+# Commit Messages
+
+Use clear, descriptive commit messages.
+
+Preferred format:
+
+```text
+type: description
+```
+
+Examples:
+
+```text
+feat: add GitHub icon
+feat: add Docker icon
+fix: improve SVG validation
+docs: update contribution guide
+test: add registry alias tests
+chore: update dependencies
+```
+
+Keep commits focused.
+
+Avoid messages such as:
+
+```text
+stuff
+changes
+update
+fix
+test
+asdf
+```
+
+---
+
+# Opening a Pull Request
+
+After your changes are complete, review your changes:
+
+```bash
+git status
+```
+
+You can also inspect the changes:
+
+```bash
+git diff
+```
+
+Run the validation:
+
+```bash
+pnpm validate
+```
+
+Run the build:
+
+```bash
+pnpm build
+```
+
+Then commit your changes:
+
+```bash
+git add .
+git commit -m "feat: add GitHub icon"
+```
+
+Push to **your fork**:
+
+```bash
+git push origin feat/add-github-icon
+```
+
+Then open a Pull Request on GitHub.
+
+The Pull Request should target:
+
+```text
+sakarkhadka10/xicons
+```
+
+and:
+
+```text
+main
+```
+
+GitHub Actions will automatically run the project's CI checks.
+
+---
+
+# Pull Request Checklist
+
+Before submitting a Pull Request, make sure:
+
+- [ ] The icon does not already exist.
+- [ ] The icon has the correct slug.
+- [ ] `original.svg` is included.
+- [ ] `mono.svg` is included.
+- [ ] `metadata.json` is included.
+- [ ] SVG files have valid `viewBox` values.
+- [ ] The monochrome icon uses `currentColor`.
+- [ ] The SVG contains no unsafe or unnecessary content.
+- [ ] Metadata is accurate.
+- [ ] The official/source website is provided where applicable.
+- [ ] Licensing/redistribution has been considered.
+- [ ] The generated registry is synchronized.
+- [ ] `pnpm validate` passes.
+- [ ] `pnpm build` passes.
+- [ ] The Pull Request contains a clear description.
+
+---
+
+# Review Process
+
+XIcons uses a maintainer-reviewed contribution model.
+
+The `main` branch is protected.
+
+Contributors cannot directly push changes to `main`.
+
+Every contribution goes through:
+
+```text
+Contributor
+     ↓
+Fork
+     ↓
+Feature branch
+     ↓
+Pull Request
+     ↓
+Automated CI
+     ↓
+Maintainer review
+     ↓
+Approval
+     ↓
+All conversations resolved
+     ↓
+Squash merge
+     ↓
+main
+```
+
+The maintainer may request changes before merging.
+
+If changes are requested:
+
+1. Update your branch.
+2. Push the new commits.
+3. CI will run again.
+4. Address all review conversations.
+5. Request another review when ready.
+
+Do not open a second Pull Request for the same change unless specifically requested.
+
+---
+
+# What CI Checks
+
+Pull Requests are automatically checked against the supported Node.js versions.
+
+The required checks currently include:
+
+```text
+validate (22)
+validate (24)
+```
+
+A Pull Request cannot be merged into `main` while required checks are failing.
+
+The CI verifies things such as:
+
+- Icon validation
+- Generated registry consistency
+- TypeScript
+- Linting
+- Tests
+- Package builds
+- Package contents
+
+---
+
+# Maintainer Review
+
+The maintainer will review:
+
+## Icon Quality
+
+- Does the icon accurately represent the source?
+- Is the SVG clean?
+- Does the monochrome variant work correctly?
+- Does it render correctly at different sizes?
+
+## Metadata
+
+- Is the name correct?
+- Is the slug appropriate?
+- Are aliases useful?
+- Is the category appropriate?
+- Is the source website correct?
+
+## Licensing
+
+- Is the source trustworthy?
+- Is redistribution appropriate?
+- Are brand guidelines respected?
+
+## Technical Quality
+
+- Does validation pass?
+- Does the generated registry remain synchronized?
+- Does the icon work with the supported packages?
+
+The maintainer may reject an icon even when CI passes if it does not meet the project's quality, licensing, or consistency standards.
+
+---
+
+# After Merge
+
+Once a Pull Request is approved and merged:
+
+```text
+main
+```
+
+contains the new icon.
+
+The icon becomes part of the next release.
+
+Merging a Pull Request does **not** automatically publish a new npm version.
+
+Release versions are managed separately by the maintainer.
+
+Contributors do not need npm publishing access.
+
+---
+
+# Release Process
+
+XIcons uses automated npm publishing through GitHub Actions and npm Trusted Publishing.
+
+Contributors should **not** run:
+
+```bash
+npm publish
+```
+
+for XIcons packages.
+
+Releases are created by the maintainer.
+
+The release process is:
+
+```text
+Changes merged into main
+        ↓
+Release version selected
+        ↓
+Package versions updated
+        ↓
+CI passes
+        ↓
+Version tag created
+        ↓
+GitHub Actions
+        ↓
+npm Trusted Publishing
+        ↓
+npm packages published
+```
+
+The publishable packages are:
+
+```text
+@axcore/xicons
+@axcore/xicons-react
+@axcore/xicons-react-native
+```
+
+They are released in lockstep.
+
+---
+
+# Adding Multiple Icons
+
+If you are contributing multiple icons, you may submit them together when they form a coherent contribution.
+
+For example:
+
+```text
+feat: add popular developer platform icons
+```
+
+with:
+
+```text
+icons/
+├── docker/
+├── github/
+├── gitlab/
+└── kubernetes/
+```
+
+However, very large contributions may be split into multiple Pull Requests if that makes review easier.
+
+When in doubt, prefer smaller, focused Pull Requests.
+
+---
+
+# Improving XIcons
+
+You do not have to contribute icons only.
+
+You can also contribute:
+
+- Tests
+- Documentation
+- Validators
+- Generators
+- React components
+- React Native components
+- CDN functionality
+- Developer tooling
+- CI improvements
+- Bug fixes
+- Performance improvements
+
+For significant architectural changes, please open an issue first so the approach can be discussed before implementation.
+
+---
+
+# Reporting Problems
+
+If you find a bug or problem, open a GitHub issue.
+
+Include:
+
+- What happened
+- What you expected
+- Steps to reproduce
+- Relevant package/version
+- Node.js version
+- pnpm version
+- Error output where applicable
+
+Screenshots or minimal reproduction examples are helpful.
+
+Please search existing issues before opening a new one.
+
+---
+
+# Requesting an Icon
+
+If you cannot contribute the icon yourself, open an icon request issue instead.
+
+Include:
+
+- Icon/brand name
+- Official website
+- Why the icon would be useful
+- Any relevant official asset/brand guideline link
+
+Please search existing issues first to avoid duplicate requests.
+
+---
+
+# Code of Conduct
+
+Be respectful and constructive.
+
+XIcons is an open-source project and contributors may have different levels of experience.
+
+Good contributions include:
+
+- Clear communication
+- Respectful reviews
+- Helpful feedback
+- Reproducible bug reports
+- Clean Pull Requests
+
+Harassment, discrimination, personal attacks, or intentionally disruptive behavior are not acceptable.
+
+---
+
+# Questions
+
+If you are unsure about something:
+
+1. Search the existing documentation.
+2. Search existing issues and Pull Requests.
+3. Open an issue for discussion.
+
+For larger changes, discussing the approach before writing a large Pull Request is encouraged.
+
+---
+
+## Thank You ❤️
+
+Every contribution helps make XIcons better for developers everywhere.
+
+Whether you add one icon, improve documentation, fix a bug, or improve the tooling — thank you for helping build XIcons.
+
+**Happy contributing!**
