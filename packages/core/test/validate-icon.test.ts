@@ -6,7 +6,7 @@ import {
   assertCanonicalNameAvailable,
   assertIconMetadata,
   assertSvg,
-} from "../scripts/validate-icon.mjs";
+} from "../scripts/validate-icon.js";
 
 const categories = [...iconCategories];
 
@@ -52,8 +52,8 @@ test("rejects a display name, unknown category, and self-alias", () => {
     /category must be one of/,
   );
 
-  const names = new Set(["github"]);
-  const aliases = new Set();
+  const names = new Set<string>();
+  const aliases = new Set<string>();
   assert.throws(
     () => assertAliasAvailable("github", "github", names, aliases),
     /duplicates the canonical name/,
@@ -61,8 +61,8 @@ test("rejects a display name, unknown category, and self-alias", () => {
 });
 
 test("rejects alias collisions with a canonical name", () => {
-  const names = new Set();
-  const aliases = new Set();
+  const names = new Set<string>();
+  const aliases = new Set<string>();
   assertCanonicalNameAvailable("alpha", names, aliases);
   assertAliasAvailable("alpha", "zeta", names, aliases);
   assert.throws(

@@ -3,16 +3,17 @@ import { register } from "node:module";
 import { test } from "node:test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import type { IconProps } from "../dist/Icon.js";
 
-register(new URL("./svg-mock-loader.mjs", import.meta.url));
+register(new URL("./svg-mock-loader.ts", import.meta.url));
 
 const { Icon } = await import("../dist/Icon.js");
 
-function render(props) {
+function render(props: IconProps): string {
   return renderToStaticMarkup(createElement(Icon, props));
 }
 
-function host(html) {
+function host(html: string): string {
   return html.match(/<xicons-svg\b[^>]*>/)?.[0] ?? "";
 }
 

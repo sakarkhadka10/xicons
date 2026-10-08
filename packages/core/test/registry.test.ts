@@ -10,7 +10,7 @@ import {
   parseViewBox,
   stripSvgWrapper,
 } from "../dist/index.js";
-import { parseIconCategories } from "../scripts/validate-icon.mjs";
+import { parseIconCategories } from "../scripts/validate-icon.js";
 
 test("listIcons returns the bundled catalog", () => {
   const icons = listIcons();

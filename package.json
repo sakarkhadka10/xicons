@@ -13,11 +13,11 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "typecheck": "turbo run typecheck",
+    "typecheck": "turbo run typecheck && tsc -p tsconfig.scripts.json",
     "test": "turbo run test",
     "validate": "pnpm --filter @axcore/xicons-icon-validator validate && pnpm typecheck && pnpm lint && pnpm test",
-    "pack:verify": "node scripts/verify-publish-readiness.mjs",
-    "publish:dry-run": "node scripts/publish-dry-run.mjs",
+    "pack:verify": "tsx scripts/verify-publish-readiness.ts",
+    "publish:dry-run": "tsx scripts/publish-dry-run.ts",
     "format": "prettier --write ."
   },
   "repository": {
@@ -29,6 +29,7 @@
     "husky": "^9.1.7",
     "prettier": "3.9.9",
     "turbo": "2.11.7",
+    "tsx": "^4.20.6",
     "typescript": "7.0.2"
   }
 }

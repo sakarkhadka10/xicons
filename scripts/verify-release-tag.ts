@@ -1,7 +1,16 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-const PACKAGES = ["packages/core", "packages/react", "packages/react-native"];
+const PACKAGES = [
+  "packages/core",
+  "packages/react",
+  "packages/react-native",
+] as const;
+
+interface PackageJson {
+  readonly version?: string;
+  readonly name?: string;
+}
 
 const ref = process.env.GITHUB_REF ?? "";
 const tag = ref.startsWith("refs/tags/") ? ref.slice("refs/tags/".length) : "";
@@ -19,7 +28,7 @@ if (!/^v\d+\.\d+\.\d+/.test(tag)) {
 const expectedVersion = tag.replace(/^v/, "").split("-")[0];
 
 const versions = PACKAGES.map((dir) => {
-  const pkg = JSON.parse(readFileSync(join(dir, "package.json"), "utf8"));
+  const pkg = JSON.parse(readFileSync(join(dir, "package.json"), "utf8")) as PackageJson;
   return { dir, version: pkg.version, name: pkg.name };
 });
 

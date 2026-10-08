@@ -1,4 +1,22 @@
-export function parseIconCategories(source) {
+import type { IconCategory } from "../src/categories.js";
+
+export interface ParsedIconMetadata {
+  readonly name: string;
+  readonly title: string;
+  readonly category: IconCategory;
+  readonly website?: string;
+  readonly aliases: readonly string[];
+}
+
+export interface AssertSvgOptions {
+  readonly requireCurrentColor?: boolean;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+
+export function parseIconCategories(source: string): IconCategory[] {
   const match = source.match(
     /export const iconCategories = \[([\s\S]*?)\] as const;/,
   );
@@ -6,7 +24,9 @@ export function parseIconCategories(source) {
     throw new Error("iconCategories export not found in src/categories.ts");
   }
 
-  const categories = [...match[1].matchAll(/"([^"]+)"/g)].map((item) => item[1]);
+  const categories = [...match[1].matchAll(/"([^"]+)"/g)].map(
+    (item) => item[1] as IconCategory,
+  );
   if (!categories.length) {
     throw new Error("iconCategories is empty");
   }
@@ -14,8 +34,12 @@ export function parseIconCategories(source) {
   return categories;
 }
 
-export function assertIconMetadata(dirName, metadata, categories) {
-  if (metadata === null || typeof metadata !== "object" || Array.isArray(metadata)) {
+export function assertIconMetadata(
+  dirName: string,
+  metadata: unknown,
+  categories: readonly IconCategory[],
+): ParsedIconMetadata {
+  if (!isRecord(metadata)) {
     throw new Error(`${dirName}/metadata.json: must be an object`);
   }
 
@@ -29,7 +53,10 @@ export function assertIconMetadata(dirName, metadata, categories) {
     throw new Error(`${dirName}/metadata.json: title must be a non-empty string`);
   }
 
-  if (typeof metadata.category !== "string" || !categories.includes(metadata.category)) {
+  if (
+    typeof metadata.category !== "string" ||
+    !categories.includes(metadata.category as IconCategory)
+  ) {
     throw new Error(
       `${dirName}/metadata.json: category must be one of: ${categories.join(", ")}`,
     );
@@ -53,17 +80,25 @@ export function assertIconMetadata(dirName, metadata, categories) {
     }
   }
 
+  const category = metadata.category as IconCategory;
+  const aliases = (metadata.aliases as string[] | undefined) ?? [];
+
   return {
     name: metadata.name,
     title: metadata.title,
-    category: metadata.category,
-    website: metadata.website,
-    aliases: metadata.aliases ?? [],
+    category,
+    ...(typeof metadata.website === "string" ? { website: metadata.website } : {}),
+    aliases,
   };
 }
 
-export function assertAliasAvailable(name, alias, names, aliases) {
-  const key = String(alias).toLowerCase();
+export function assertAliasAvailable(
+  name: string,
+  alias: string,
+  names: Set<string>,
+  aliases: Set<string>,
+): void {
+  const key = alias.toLowerCase();
   if (key === name.toLowerCase()) {
     throw new Error(`${name}: alias "${alias}" duplicates the canonical name`);
   }
@@ -73,7 +108,11 @@ export function assertAliasAvailable(name, alias, names, aliases) {
   aliases.add(key);
 }
 
-export function assertCanonicalNameAvailable(name, names, aliases) {
+export function assertCanonicalNameAvailable(
+  name: string,
+  names: Set<string>,
+  aliases: Set<string>,
+): void {
   if (names.has(name)) {
     throw new Error(`Duplicate icon name: ${name}`);
   }
@@ -83,7 +122,11 @@ export function assertCanonicalNameAvailable(name, names, aliases) {
   names.add(name);
 }
 
-export function assertSvg(relativePath, svg, options = {}) {
+export function assertSvg(
+  relativePath: string,
+  svg: string,
+  options: AssertSvgOptions = {},
+): void {
   if (!svg.startsWith("<svg")) {
     throw new Error(`${relativePath}: must start with <svg`);
   }
