@@ -1,6 +1,6 @@
 {
   "name": "@axcore/xicons",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Developer icon registry with original, mono, and branded SVG variants.",
   "license": "MIT",
   "type": "module",
