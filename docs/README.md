@@ -12,4 +12,5 @@
 ## Repository
 
 - [Contributing icons](../CONTRIBUTING.md)
+- [Release & CI/CD](./release.md)
 - [Monorepo README](../README.md)

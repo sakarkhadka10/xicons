@@ -1,5 +1,7 @@
 # XIcons
 
+[![CI](https://github.com/sakarkhadka10/xicons/actions/workflows/ci.yml/badge.svg)](https://github.com/sakarkhadka10/xicons/actions/workflows/ci.yml)
+
 **Developer icons for React, React Native, and SVG URLs.**
 
 One catalog, two variants (`original` brand colors and `mono` for theming), zero duplicate assets. Built for npm, tree-shaken at the app boundary, and validated in CI.
@@ -79,14 +81,16 @@ Contributing icons: [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## Development (this repo)
 
-Requirements: **Node.js 22+**, **pnpm 12+**.
+Requirements: **Node.js 22+**, **pnpm 12.10.1** (see root `packageManager`).
 
 ```bash
 pnpm install
+pnpm validate       # also runs via Husky pre-commit
 pnpm build
-pnpm validate
 pnpm --filter @axcore/xicons-cdn dev   # http://localhost:8787
 ```
+
+CI runs on every pull request and on `main`. Maintainer releases: [docs/release.md](./docs/release.md).
 
 ---
 

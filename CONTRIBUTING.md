@@ -26,6 +26,15 @@ React · React Native · CDN
 
 Running `pnpm build` or `pnpm validate` always regenerates the registry from `icons/`.
 
+If you change files under `icons/`, commit the updated `packages/core/src/icons.generated.ts` (CI fails if it is out of sync).
+
+## CI and pre-commit
+
+- **Husky** (`.husky/pre-commit`) runs `pnpm validate` before each commit.
+- **GitHub Actions** (`.github/workflows/ci.yml`) runs on pull requests and `main`: `pnpm validate`, generated-file check, `pnpm build`, and `pnpm pack:verify`.
+
+Do not bypass hooks with `--no-verify` unless a maintainer explicitly agrees.
+
 ## Adding a new icon
 
 ### 1. Create a directory

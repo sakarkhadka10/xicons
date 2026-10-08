@@ -4,6 +4,22 @@
   "description": "Developer icon registry with original and mono SVG variants.",
   "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sakarkhadka10/xicons.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/sakarkhadka10/xicons/issues"
+  },
+  "homepage": "https://github.com/sakarkhadka10/xicons/tree/main/packages/core#readme",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "files": ["dist", "README.md"],
   "keywords": [
     "icons",

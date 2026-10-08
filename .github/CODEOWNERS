@@ -1,0 +1,6 @@
+# Default reviewers for the repository
+* @sakarkhadka10
+
+# Icon assets and generated registry
+/icons/ @sakarkhadka10
+/packages/core/ @sakarkhadka10
