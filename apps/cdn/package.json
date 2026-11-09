@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@axcore/xicons": "workspace:*",
-    "hono": "^4.9.8",
-    "@hono/node-server": "^2.1.5"
+    "hono": "^4.13.16",
+    "@hono/node-server": "^2.1.6"
   },
   "devDependencies": {
     "tsx": "^4.20.6",
