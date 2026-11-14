@@ -191,11 +191,11 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       '@hono/node-server':
-        specifier: ^2.1.5
-        version: 2.1.5(hono@4.13.13)
+        specifier: ^2.1.6
+        version: 2.1.6(hono@4.13.16)
       hono:
-        specifier: ^4.9.8
-        version: 4.13.13
+        specifier: ^4.13.16
+        version: 4.13.16
     devDependencies:
       '@types/node':
         specifier: ^26.6.6
@@ -242,7 +242,7 @@ importers:
         version: 0.87.1(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1)
       react-native-svg:
         specifier: '>=15'
-        version: 15.16.0(react-native@0.87.1(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1))(react@19.3.1)
+        version: 15.16.1(react-native@0.87.1(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1))(react@19.3.1)
     devDependencies:
       '@types/react':
         specifier: ^19.3.0
@@ -495,8 +495,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@hono/node-server@2.1.5':
-    resolution: {integrity: sha512-MgP/I06GdvsilDspMk/qmRzpk8LOUStP6jFAbSRi40W09DhoyUn+Mj7eyKICPqeYKybOjVFLVIAQzvu1bfIa7Q==}
+  '@hono/node-server@2.1.6':
+    resolution: {integrity: sha512-p/KH9MnfNcsm3sR6x4lNgm5j+QN4Et8srKredl9DZfXiyZ1UQ3aQ2YVpFLbqktYN5JI+DB+VZFKM2PqE5hLKjQ==}
     engines: {node: '>=20'}
     peerDependencies:
       hono: ^4 || ^5.0.0-0
@@ -1050,8 +1050,8 @@ packages:
   hermes-parser@0.36.1:
     resolution: {integrity: sha512-GApNk4zLHi2UWoWZZkx7LNCOSzLSc5lB55pZ/PhK7ycFeg7u5LcF88p/WbpIi1XUDtE0MpHE3uRR3u3KB7TjSQ==}
 
-  hono@4.13.13:
-    resolution: {integrity: sha512-CQ46U0ZkAGmbT/4UxdzzGJpacP2IeKgY4a5/tOI9AABbpOMfK739wfDXmv1usCk+3RkKj1hQy4/fjhiwa2xlrA==}
+  hono@4.13.16:
+    resolution: {integrity: sha512-AOLOEhvrV+iH92xXCnFr/5+3KjPKcI3xP63XJtX5spAnkznPdHijlIsUTpi7/9EhWqrTCekw5c5zh1K+YsVw7A==}
     engines: {node: '>=16.9.0'}
 
   http-errors@2.0.1:
@@ -1319,8 +1319,8 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
-  react-native-svg@15.16.0:
-    resolution: {integrity: sha512-uh8yktufYeRU3W9Omi8+SPyLF9BVN4JmLflSgc9oOcKkSKk/S5JUmmTjKZq/L8GHfQUtCvcu/W6X4xhEfBBAjQ==}
+  react-native-svg@15.16.1:
+    resolution: {integrity: sha512-Y4hCfg0o9ovGJYnNIySph5xWGqzawhW7MB2AjMUTpqJkrtPAx5XCeSk+jRMux2hanUvi9KvdVf2aZu0OFWtjgw==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -1717,9 +1717,9 @@ snapshots:
   '@esbuild/win32-x64@0.28.2':
     optional: true
 
-  '@hono/node-server@2.1.5(hono@4.13.13)':
+  '@hono/node-server@2.1.6(hono@4.13.16)':
     dependencies:
-      hono: 4.13.13
+      hono: 4.13.16
 
   '@isaacs/ttlcache@1.4.1': {}
 
@@ -2214,7 +2214,7 @@ snapshots:
     dependencies:
       hermes-estree: 0.36.1
 
-  hono@4.13.13: {}
+  hono@4.13.16: {}
 
   http-errors@2.0.1:
     dependencies:
@@ -2570,7 +2570,7 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-native-svg@15.16.0(react-native@0.87.1(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1))(react@19.3.1):
+  react-native-svg@15.16.1(react-native@0.87.1(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.1)(supports-color@8.1.1))(react@19.3.1):
     dependencies:
       css-select: 5.2.2
       css-tree: 1.1.3
