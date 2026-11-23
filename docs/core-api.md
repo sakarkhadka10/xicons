@@ -82,11 +82,11 @@ Names are trimmed and lowercased at lookup time. `IconName` is a `string`, not a
 
 Used by the CDN renderer; safe to reuse in custom tooling.
 
-| Function | Purpose |
-| --- | --- |
-| `parseViewBox(svg, fallback?)` | Read `viewBox` attribute |
-| `stripSvgWrapper(svg)` | Inner HTML without root `<svg>` |
-| `escapeXml(str)` | Escape text for XML attributes |
+| Function                       | Purpose                         |
+| ------------------------------ | ------------------------------- |
+| `parseViewBox(svg, fallback?)` | Read `viewBox` attribute        |
+| `stripSvgWrapper(svg)`         | Inner HTML without root `<svg>` |
+| `escapeXml(str)`               | Escape text for XML attributes  |
 
 ## Types
 
@@ -119,7 +119,7 @@ The same list is exported as `iconCategories`.
 
 ## Lookup rules
 
-1. Trim and lowercase the requested name.  
-2. Match canonical `name` in the registry.  
-3. Else match any entry’s `aliases`.  
+1. Trim and lowercase the requested name.
+2. Match canonical `name` in the registry.
+3. Else match any entry’s `aliases`.
 4. Unknown → `undefined` / `false` / `null` behavior in UI packages.

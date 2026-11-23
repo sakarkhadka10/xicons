@@ -2,11 +2,11 @@
 
 ## Requirements
 
-| Runtime | Packages |
-| --- | --- |
-| React ^19.3.0 | `@axcore/xicons-react` |
+| Runtime                    | Packages                                          |
+| -------------------------- | ------------------------------------------------- |
+| React ^19.3.0              | `@axcore/xicons-react`                            |
 | React Native ≥ 0.78 / Expo | `@axcore/xicons-react-native`, `react-native-svg` |
-| Node / bundlers | `@axcore/xicons` |
+| Node / bundlers            | `@axcore/xicons`                                  |
 
 ## Install from npm
 

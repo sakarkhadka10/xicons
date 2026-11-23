@@ -8,6 +8,7 @@
 4. [Core API](./core-api.md) — `@axcore/xicons`
 5. [CDN & URL embedding](./cdn.md) — SVG strips for READMEs
 6. [Icon catalog](./icons.md) — names, aliases, variants
+7. [UI icons](./ui-icons.md) — 12,000+ tree-shakable icons, Tailwind, adding icons
 
 ## Repository
 

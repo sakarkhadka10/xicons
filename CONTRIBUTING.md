@@ -2,6 +2,25 @@
 
 Thank you for contributing to **XIcons**! ❤️
 
+## Quick start (5 minutes)
+
+```bash
+git clone https://github.com/<you>/xicons && cd xicons
+nvm use            # Node 22+ (see .nvmrc)
+corepack enable    # pnpm version comes from package.json
+pnpm install
+pnpm build         # builds all packages (a few seconds)
+```
+
+| I want to…                | Do this                                                                                                     |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Add or redesign a UI icon | `pnpm icons:add my-icon.svg` (add `--force` to replace one), then attach light + dark screenshots to the PR |
+| Add a brand icon          | Create `icons/brands/<slug>/` (see [Adding an Icon](#adding-an-icon))                                       |
+| Fix code                  | Edit `packages/*/src`, then `pnpm validate`                                                                 |
+| Check before pushing      | `pnpm check` (fast, also runs on pre-commit) and `pnpm validate` (full: types, lint, tests)                 |
+
+Good first issues are labeled `good first issue`. Please read the [Code of Conduct](./CODE_OF_CONDUCT.md).
+
 XIcons is an open-source icon ecosystem designed to provide consistent, developer-friendly icons across web, React, React Native, and CDN environments.
 
 We welcome:
@@ -177,14 +196,8 @@ xicons/
 ├── apps/
 │   └── cdn/                 @axcore/xicons-cdn (private, not published)
 ├── icons/
-│   ├── react/
-│   │   ├── original.svg
-│   │   ├── mono.svg
-│   │   └── metadata.json
-│   └── nextjs/
-│       ├── original.svg
-│       ├── mono.svg
-│       └── metadata.json
+│   ├── brands/              developer brand icons (one folder each)
+│   └── ui/                  12k+ UI icons (one .svg each)
 ├── packages/
 │   ├── core/                @axcore/xicons
 │   ├── react/               @axcore/xicons-react
@@ -204,18 +217,29 @@ The `icons/` directory is the source of truth for icon assets.
 
 ---
 
+# Adding a UI Icon
+
+UI icons (outline / filled / duotone) live as single files in `icons/ui/<kebab-name>.svg`.
+Run `pnpm icons:add <file.svg>` to convert an SVG into the house style, then `pnpm build`.
+See [docs/ui-icons.md](./docs/ui-icons.md#adding-an-icon). Do not delete `icons/ui/THIRD_PARTY_LICENSES.md`.
+
+Brand icons live in `icons/brands/<slug>/` (see below). Neutral black/white parts of a brand's `original.svg` must use
+`currentColor`, so the logo stays visible in both light and dark mode.
+
+---
+
 # Adding an Icon
 
 Each icon should have its own directory:
 
 ```text
-icons/<icon-slug>/
+icons/brands/<icon-slug>/
 ```
 
 For example:
 
 ```text
-icons/github/
+icons/brands/github/
 ├── original.svg
 ├── mono.svg
 └── metadata.json
@@ -321,15 +345,15 @@ Each icon must have a `metadata.json`. Copy the shape of the existing icons. The
 }
 ```
 
-| Field | Required | Rule |
-| --- | --- | --- |
-| `name` | yes | Exactly the directory name. Lowercase. This is the canonical id. |
-| `title` | yes | Human-readable label, such as `React` or `Next.js`. |
-| `category` | yes | One of the categories below. |
-| `website` | no | Product site. |
-| `aliases` | no | Other lookup strings. Not the canonical name, and not another icon's name or alias. |
+| Field      | Required | Rule                                                                                |
+| ---------- | -------- | ----------------------------------------------------------------------------------- |
+| `name`     | yes      | Exactly the directory name. Lowercase. This is the canonical id.                    |
+| `title`    | yes      | Human-readable label, such as `React` or `Next.js`.                                 |
+| `category` | yes      | One of the categories below.                                                        |
+| `website`  | no       | Product site.                                                                       |
+| `aliases`  | no       | Other lookup strings. Not the canonical name, and not another icon's name or alias. |
 
-`pnpm validate` rejects metadata that does not match this table. Look at `icons/react/metadata.json` before adding a new icon.
+`pnpm validate` rejects metadata that does not match this table. Look at `icons/brands/react/metadata.json` before adding a new icon.
 
 ---
 
@@ -404,7 +428,7 @@ Do not create a new directory solely because an icon belongs to a different cate
 For example:
 
 ```text
-icons/
+icons/brands/
 ├── github/
 ├── docker/
 ├── npm/
@@ -414,7 +438,7 @@ icons/
 Not:
 
 ```text
-icons/
+icons/brands/
 ├── developer/
 │   ├── github/
 │   └── docker/
@@ -895,7 +919,7 @@ feat: add popular developer platform icons
 with:
 
 ```text
-icons/
+icons/brands/
 ├── docker/
 ├── github/
 ├── gitlab/
@@ -967,19 +991,7 @@ Please search existing issues first to avoid duplicate requests.
 
 # Code of Conduct
 
-Be respectful and constructive.
-
-XIcons is an open-source project and contributors may have different levels of experience.
-
-Good contributions include:
-
-- Clear communication
-- Respectful reviews
-- Helpful feedback
-- Reproducible bug reports
-- Clean Pull Requests
-
-Harassment, discrimination, personal attacks, or intentionally disruptive behavior are not acceptable.
+All contributors follow the [Code of Conduct](./CODE_OF_CONDUCT.md). Report security issues privately, see [SECURITY.md](./SECURITY.md).
 
 ---
 

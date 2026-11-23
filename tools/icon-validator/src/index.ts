@@ -9,7 +9,7 @@ import {
   assertSvg,
 } from "../../../packages/core/scripts/validate-icon.js";
 
-const iconsRoot = join(dirname(fileURLToPath(import.meta.url)), "../../../icons");
+const iconsRoot = join(dirname(fileURLToPath(import.meta.url)), "../../../icons/brands");
 
 async function exists(path: string): Promise<boolean> {
   try {

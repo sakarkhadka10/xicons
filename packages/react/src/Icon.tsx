@@ -1,9 +1,5 @@
 import type { CSSProperties } from "react";
-import {
-  DEFAULT_ICON_VARIANT,
-  getIconSvg,
-  type IconVariant,
-} from "@axcore/xicons";
+import { DEFAULT_ICON_VARIANT, getIconSvg, type IconVariant } from "@axcore/xicons";
 
 export interface IconProps {
   name: string;

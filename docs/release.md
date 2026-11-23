@@ -17,9 +17,9 @@ Husky runs `pnpm validate` on every commit (`.husky/pre-commit`).
 
 ## Continuous integration
 
-| Workflow | File | Triggers |
-| --- | --- | --- |
-| **CI** | `.github/workflows/ci.yml` | Pull requests and pushes to `main` |
+| Workflow    | File                            | Triggers                               |
+| ----------- | ------------------------------- | -------------------------------------- |
+| **CI**      | `.github/workflows/ci.yml`      | Pull requests and pushes to `main`     |
 | **Release** | `.github/workflows/release.yml` | Version tags `v*.*.*`, manual dispatch |
 
 ### CI job: `validate`
@@ -27,7 +27,7 @@ Husky runs `pnpm validate` on every commit (`.husky/pre-commit`).
 - Node.js **22** and **24** (matrix)
 - pnpm **12.10.1** (from root `packageManager`)
 - `pnpm validate` → icon validator, typecheck, lint, test
-- Ensures `packages/core/src/icons.generated.ts` matches `icons/` sources
+- Ensures `packages/core/src/icons.generated.ts` matches `icons/brands/` sources
 - `pnpm build`
 - `pnpm pack:verify` (tarball contents for publishable packages)
 
@@ -54,14 +54,14 @@ The public packages are currently `0.1.1`, so the matching tag is `v0.1.1`. The 
 
 ### What gets published
 
-| Package | Published |
-| --- | --- |
-| `@axcore/xicons` | Yes |
-| `@axcore/xicons-react` | Yes |
-| `@axcore/xicons-react-native` | Yes |
-| `@axcore/xicons-cdn` | No (`private`) |
+| Package                         | Published      |
+| ------------------------------- | -------------- |
+| `@axcore/xicons`                | Yes            |
+| `@axcore/xicons-react`          | Yes            |
+| `@axcore/xicons-react-native`   | Yes            |
+| `@axcore/xicons-cdn`            | No (`private`) |
 | `@axcore/xicons-icon-validator` | No (`private`) |
-| Root `xicons` workspace | No (`private`) |
+| Root `xicons` workspace         | No (`private`) |
 
 ### Release workflow
 

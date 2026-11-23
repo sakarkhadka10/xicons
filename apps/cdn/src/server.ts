@@ -16,32 +16,30 @@ app.get("/icons", (c) => {
 
   const variant = parseCdnVariant(c.req.query("variant"));
 
-  const size = Math.min(
-    Math.max(Number(c.req.query("size") ?? 48) || 48, 16),
-    512,
-  );
+  const size = Math.min(Math.max(Number(c.req.query("size") ?? 48) || 48, 16), 512);
 
-  const gap = Math.min(
-    Math.max(Number(c.req.query("gap") ?? 12) || 12, 0),
-    128,
-  );
+  const gap = Math.min(Math.max(Number(c.req.query("gap") ?? 12) || 12, 0), 128);
 
-  const svg = renderIcons({ names, variant, size, gap });
+  const color = c.req.query("color")?.replace(/^#/, "");
+  const svg = renderIcons({
+    names,
+    variant,
+    size,
+    gap,
+    ...(color ? { color } : {}),
+  });
 
   return c.body(svg, 200, {
     "Content-Type": "image/svg+xml; charset=utf-8",
-    "Cache-Control": "public, max-age=31536000, immutable",
+    // Not immutable: the same URL must pick up redrawn icons after a release.
+    "Cache-Control": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400",
     "X-Content-Type-Options": "nosniff",
   });
 });
 
 function parseCdnVariant(value: string | undefined): IconVariant {
   const normalized = value?.trim().toLowerCase();
-  if (
-    normalized === "mono" ||
-    normalized === "original" ||
-    normalized === "branded"
-  ) {
+  if (normalized === "mono" || normalized === "original" || normalized === "branded") {
     return normalized;
   }
   return DEFAULT_CDN_VARIANT;

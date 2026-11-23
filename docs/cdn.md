@@ -16,10 +16,10 @@ Base URL: `http://localhost:8787`
 
 ## Endpoints
 
-| Method | Path | Description |
-| --- | --- | --- |
-| `GET` | `/health` | `{ "ok": true, "service": "xicons-cdn" }` |
-| `GET` | `/icons` | SVG sprite strip |
+| Method | Path      | Description                               |
+| ------ | --------- | ----------------------------------------- |
+| `GET`  | `/health` | `{ "ok": true, "service": "xicons-cdn" }` |
+| `GET`  | `/icons`  | SVG sprite strip                          |
 
 ## URL shape
 
@@ -31,14 +31,15 @@ https://<your-host>/icons?i=react,nextjs&size=48&gap=12
 
 ## `/icons` query parameters
 
-| Param | Default | Range | Description |
-| --- | --- | --- | --- |
-| `i` | — | max 50 names | Comma-separated icon names or aliases |
+| Param     | Default   | Range                         | Description                                                             |
+| --------- | --------- | ----------------------------- | ----------------------------------------------------------------------- |
+| `i`       | —         | max 50 names                  | Comma-separated brand **or UI** icon names (e.g. `react,camera,bell`)   |
 | `variant` | `branded` | `branded`, `original`, `mono` | Which SVG variant to draw. Omit or pass an unknown value for `branded`. |
-| `size` | `48` | 16–512 | Each icon cell size (px) |
-| `gap` | `12` | 0–128 | Horizontal gap between icons (px) |
+| `size`    | `48`      | 16–512                        | Each icon cell size (px)                                                |
+| `gap`     | `12`      | 0–128                         | Horizontal gap between icons (px)                                       |
+| `color`   | —         | hex, `#` optional             | Color for `currentColor` parts (UI icons and mono brand icons)          |
 
-Unknown names in `i` are skipped. If none resolve, the response is a minimal 1×1 SVG.
+Brand names win over UI names; unknown names in `i` are skipped. If none resolve, the response is a minimal 1×1 SVG.
 
 ## Examples
 
@@ -57,11 +58,7 @@ Markdown:
 HTML, using a host you deploy:
 
 ```html
-<img
-  src="https://<your-host>/icons?i=react,nextjs&size=48"
-  alt="React and Next.js"
-  height="48"
-/>
+<img src="https://<your-host>/icons?i=react,nextjs&size=48" alt="React and Next.js" height="48" />
 ```
 
 ## Caching
@@ -69,11 +66,22 @@ HTML, using a host you deploy:
 Responses include:
 
 ```text
-Cache-Control: public, max-age=31536000, immutable
+Cache-Control: public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400
 Content-Type: image/svg+xml; charset=utf-8
 ```
 
-Use versioned CDN URLs or cache-bust query params when you change icon assets in self-hosted setups.
+Browsers cache for a day and shared caches for a week, so redrawn icons reach README badges after a release.
+
+### Light and dark READMEs
+
+`<img>` icons can't read the page theme, so render one per theme with GitHub's theme fragments:
+
+```md
+![stack](https://<your-host>/icons?i=react,camera&color=18181b#gh-light-mode-only)
+![stack](https://<your-host>/icons?i=react,camera&color=e4e4e7#gh-dark-mode-only)
+```
+
+For a single static icon, you don't need the server: `https://cdn.jsdelivr.net/npm/@axcore/xicons/dist/svg/<name>.svg`.
 
 ## Self-hosting
 

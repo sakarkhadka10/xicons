@@ -3,10 +3,7 @@ interface ResolveResult {
   readonly shortCircuit?: boolean;
 }
 
-type NextResolve = (
-  specifier: string,
-  context: Record<string, unknown>,
-) => Promise<ResolveResult>;
+type NextResolve = (specifier: string, context: Record<string, unknown>) => Promise<ResolveResult>;
 
 export async function resolve(
   specifier: string,

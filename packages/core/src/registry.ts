@@ -21,10 +21,7 @@ function resolveIcon(name: IconName): IconDefinition | undefined {
 }
 
 /** Pick SVG markup for a variant, with sensible fallbacks when optional files are absent. */
-export function resolveIconSvg(
-  icon: IconDefinition,
-  variant: IconVariant,
-): string {
+export function resolveIconSvg(icon: IconDefinition, variant: IconVariant): string {
   const { variants } = icon;
 
   switch (variant) {

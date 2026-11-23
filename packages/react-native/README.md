@@ -75,12 +75,12 @@ Use `variant="original"` or `variant="branded"` when you need full-color artwork
 
 ## Props
 
-| Prop      | Type                   | Default      | Description                       |
-| --------- | ---------------------- | ------------ | --------------------------------- |
-| `name`    | `string`               | required     | Icon name or registered alias     |
+| Prop      | Type                                | Default  | Description                       |
+| --------- | ----------------------------------- | -------- | --------------------------------- |
+| `name`    | `string`                            | required | Icon name or registered alias     |
 | `variant` | `"original" \| "mono" \| "branded"` | `"mono"` | Icon variant                      |
-| `size`    | `number`               | `24`         | Icon width and height             |
-| `color`   | `string`               | —            | Color applied to monochrome icons |
+| `size`    | `number`                            | `24`     | Icon width and height             |
+| `color`   | `string`                            | —        | Color applied to monochrome icons |
 
 ---
 

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/sakarkhadka10/xicons/security/advisories/new
+    about: Report security issues privately, not as a public issue.
+  - name: Docs
+    url: https://github.com/sakarkhadka10/xicons/tree/main/docs
+    about: Usage guides for React, React Native, vanilla JS and the CDN.

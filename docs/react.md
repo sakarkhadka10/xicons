@@ -24,15 +24,15 @@ Names are case-insensitive. Aliases work (`next` → `nextjs`). See [Icon catalo
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `name` | `string` | — | Icon id or alias (required) |
-| `variant` | `"original"` \| `"mono"` \| `"branded"` | `"mono"` | Color style |
-| `size` | `number` \| `string` | — | Width and height of the wrapper (px or CSS length) |
-| `color` | `string` | — | CSS `color` on the wrapper. Mono icons pick it up through `currentColor`. Explicit fills in `original` artwork stay as drawn. |
-| `title` | `string` | — | Accessible name; sets `role="img"` and `aria-label`. Omit it for decorative icons (`aria-hidden="true"`). |
-| `className` | `string` | — | Applied to the outer wrapper |
-| `style` | `CSSProperties` | — | Inline styles on the wrapper |
+| Prop        | Type                                    | Default  | Description                                                                                                                   |
+| ----------- | --------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `name`      | `string`                                | —        | Icon id or alias (required)                                                                                                   |
+| `variant`   | `"original"` \| `"mono"` \| `"branded"` | `"mono"` | Color style                                                                                                                   |
+| `size`      | `number` \| `string`                    | —        | Width and height of the wrapper (px or CSS length)                                                                            |
+| `color`     | `string`                                | —        | CSS `color` on the wrapper. Mono icons pick it up through `currentColor`. Explicit fills in `original` artwork stay as drawn. |
+| `title`     | `string`                                | —        | Accessible name; sets `role="img"` and `aria-label`. Omit it for decorative icons (`aria-hidden="true"`).                     |
+| `className` | `string`                                | —        | Applied to the outer wrapper                                                                                                  |
+| `style`     | `CSSProperties`                         | —        | Inline styles on the wrapper                                                                                                  |
 
 Unknown icons return `null` (no throw).
 
@@ -49,16 +49,16 @@ Do not combine `size={…}` with Tailwind width/height on the same icon. `size` 
 
 Common utilities:
 
-- `h-* w-*` — box size  
-- `shrink-0` — prevent flex shrink  
+- `h-* w-*` — box size
+- `shrink-0` — prevent flex shrink
 - `text-*` — color for `variant="mono"`
 
 ## Variants
 
-| Variant | When to use |
-| --- | --- |
-| `original` | Brand colors embedded in the SVG |
-| `mono` | Single-color; uses `currentColor` (set `color` or `text-*`) |
+| Variant    | When to use                                                 |
+| ---------- | ----------------------------------------------------------- |
+| `original` | Brand colors embedded in the SVG                            |
+| `mono`     | Single-color; uses `currentColor` (set `color` or `text-*`) |
 
 If `mono` is missing for an icon, the original artwork is used.
 

@@ -17,16 +17,12 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 export function parseIconCategories(source: string): IconCategory[] {
-  const match = source.match(
-    /export const iconCategories = \[([\s\S]*?)\] as const;/,
-  );
+  const match = source.match(/export const iconCategories = \[([\s\S]*?)\] as const;/);
   if (!match?.[1]) {
     throw new Error("iconCategories export not found in src/categories.ts");
   }
 
-  const categories = [...match[1].matchAll(/"([^"]+)"/g)].map(
-    (item) => item[1] as IconCategory,
-  );
+  const categories = [...match[1].matchAll(/"([^"]+)"/g)].map((item) => item[1] as IconCategory);
   if (!categories.length) {
     throw new Error("iconCategories is empty");
   }
@@ -44,9 +40,7 @@ export function assertIconMetadata(
   }
 
   if (typeof metadata.name !== "string" || metadata.name !== dirName) {
-    throw new Error(
-      `${dirName}/metadata.json: name must be "${dirName}" to match the directory`,
-    );
+    throw new Error(`${dirName}/metadata.json: name must be "${dirName}" to match the directory`);
   }
 
   if (typeof metadata.title !== "string" || metadata.title.trim() === "") {
@@ -57,9 +51,7 @@ export function assertIconMetadata(
     typeof metadata.category !== "string" ||
     !categories.includes(metadata.category as IconCategory)
   ) {
-    throw new Error(
-      `${dirName}/metadata.json: category must be one of: ${categories.join(", ")}`,
-    );
+    throw new Error(`${dirName}/metadata.json: category must be one of: ${categories.join(", ")}`);
   }
 
   if (metadata.website !== undefined) {
@@ -122,11 +114,7 @@ export function assertCanonicalNameAvailable(
   names.add(name);
 }
 
-export function assertSvg(
-  relativePath: string,
-  svg: string,
-  options: AssertSvgOptions = {},
-): void {
+export function assertSvg(relativePath: string, svg: string, options: AssertSvgOptions = {}): void {
   if (!svg.startsWith("<svg")) {
     throw new Error(`${relativePath}: must start with <svg`);
   }

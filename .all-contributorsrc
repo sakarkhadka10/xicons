@@ -1,0 +1,19 @@
+{
+  "projectName": "xicons",
+  "projectOwner": "sakarkhadka10",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": ["README.md"],
+  "imageSize": 80,
+  "commit": false,
+  "contributorsPerLine": 7,
+  "contributors": [
+    {
+      "login": "sakarkhadka10",
+      "name": "sakarkhadka10",
+      "avatar_url": "https://github.com/sakarkhadka10.png",
+      "profile": "https://github.com/sakarkhadka10",
+      "contributions": ["code", "design", "infra", "maintenance", "doc", "test"]
+    }
+  ]
+}
