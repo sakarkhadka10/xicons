@@ -2,54 +2,58 @@
   "name": "@axcore/xicons-react",
   "version": "0.1.3",
   "description": "React Icon component for XIcons — original and mono developer SVGs.",
+  "keywords": [
+    "axcore",
+    "components",
+    "icons",
+    "react",
+    "svg",
+    "tailwind",
+    "xicons"
+  ],
+  "homepage": "https://github.com/sakarkhadka10/xicons/tree/main/packages/react#readme",
+  "bugs": {
+    "url": "https://github.com/sakarkhadka10/xicons/issues"
+  },
   "license": "MIT",
-  "type": "module",
+  "author": "sakarkhadka10 (https://github.com/sakarkhadka10)",
+  "contributors": [
+    "sakarkhadka10 (https://github.com/sakarkhadka10)"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sakarkhadka10/xicons.git",
     "directory": "packages/react"
   },
-  "bugs": {
-    "url": "https://github.com/sakarkhadka10/xicons/issues"
-  },
-  "homepage": "https://github.com/sakarkhadka10/xicons/tree/main/packages/react#readme",
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
-  },
-  "engines": {
-    "node": ">=22.0.0"
-  },
   "files": [
     "dist",
     "README.md"
   ],
-  "keywords": [
-    "icons",
-    "react",
-    "svg",
-    "components",
-    "xicons",
-    "tailwind",
-    "axcore"
-  ],
-  "peerDependencies": {
-    "react": "^19.3.1"
-  },
-  "dependencies": {
-    "@axcore/xicons": "workspace:*"
-  },
+  "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./icons": {
+      "types": "./dist/icons.d.ts",
+      "import": "./dist/icons.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && tsx ../../scripts/build-ui-icons.ts jsx",
     "lint": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit",
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit",
-    "test": "tsc -p tsconfig.json && node --import tsx --test test/*.test.ts"
+    "test": "node --import tsx --test test/*.test.ts"
+  },
+  "dependencies": {
+    "@axcore/xicons": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^19.3.0",
@@ -57,5 +61,11 @@
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "tsx": "^4.20.6"
+  },
+  "peerDependencies": {
+    "react": "^19.3.1"
+  },
+  "engines": {
+    "node": ">=22.0.0"
   }
 }

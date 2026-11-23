@@ -1,52 +1,65 @@
 {
   "name": "@axcore/xicons",
   "version": "0.1.3",
-  "description": "Developer icon registry with original, mono, and branded SVG variants.",
+  "description": "12,000+ tree-shakable SVG icons plus developer brand icons. Framework-agnostic data, toSvg(), and static SVG files.",
+  "keywords": [
+    "axcore",
+    "developer",
+    "icons",
+    "registry",
+    "svg",
+    "tailwind",
+    "tech-stack",
+    "tree-shaking",
+    "xicons"
+  ],
+  "homepage": "https://github.com/sakarkhadka10/xicons/tree/main/packages/core#readme",
+  "bugs": {
+    "url": "https://github.com/sakarkhadka10/xicons/issues"
+  },
   "license": "MIT",
-  "type": "module",
+  "author": "sakarkhadka10 (https://github.com/sakarkhadka10)",
+  "contributors": [
+    "sakarkhadka10 (https://github.com/sakarkhadka10)"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sakarkhadka10/xicons.git",
     "directory": "packages/core"
   },
-  "bugs": {
-    "url": "https://github.com/sakarkhadka10/xicons/issues"
-  },
-  "homepage": "https://github.com/sakarkhadka10/xicons/tree/main/packages/core#readme",
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
-  },
-  "engines": {
-    "node": ">=22.0.0"
-  },
   "files": [
     "dist",
     "README.md"
   ],
-  "keywords": [
-    "icons",
-    "svg",
-    "developer",
-    "tech-stack",
-    "registry",
-    "xicons",
-    "axcore"
-  ],
+  "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./icons": {
+      "types": "./dist/icons.d.ts",
+      "import": "./dist/icons.js"
+    },
+    "./svg/*": "./dist/svg/*",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "generate": "tsx scripts/generate-icons.ts",
-    "build": "pnpm run generate && tsc -p tsconfig.json",
+    "build": "pnpm run generate && tsc -p tsconfig.json && tsx ../../scripts/build-ui-icons.ts svg",
     "lint": "pnpm run generate && tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit",
     "typecheck": "pnpm run generate && tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit",
-    "test": "pnpm run generate && tsc -p tsconfig.json && node --import tsx --test test/*.test.ts"
+    "test": "node --import tsx --test test/*.test.ts"
   },
   "devDependencies": {
     "tsx": "^4.20.6"
+  },
+  "engines": {
+    "node": ">=22.0.0"
   }
 }

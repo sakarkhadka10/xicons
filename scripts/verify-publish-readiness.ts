@@ -27,27 +27,39 @@ const PUBLISH_PACKAGES: readonly PublishPackage[] = [
   {
     dir: "packages/core",
     name: "@axcore/xicons",
-    required: ["dist/index.js", "dist/index.d.ts"],
+    required: [
+      "dist/index.js",
+      "dist/index.d.ts",
+      "dist/icons.js",
+      "dist/svg/camera.svg",
+      "dist/THIRD_PARTY_LICENSES.md",
+    ],
   },
   {
     dir: "packages/react",
     name: "@axcore/xicons-react",
-    required: ["dist/index.js", "dist/index.d.ts", "dist/Icon.js"],
+    required: [
+      "dist/index.js",
+      "dist/index.d.ts",
+      "dist/Icon.js",
+      "dist/icons.js",
+      "dist/THIRD_PARTY_LICENSES.md",
+    ],
   },
   {
     dir: "packages/react-native",
     name: "@axcore/xicons-react-native",
-    required: ["dist/index.js", "dist/index.d.ts", "dist/Icon.js"],
+    required: [
+      "dist/index.js",
+      "dist/index.d.ts",
+      "dist/Icon.js",
+      "dist/icons.js",
+      "dist/THIRD_PARTY_LICENSES.md",
+    ],
   },
 ] as const;
 
-const FORBIDDEN_PREFIXES = [
-  "node_modules/",
-  "src/",
-  "test/",
-  "coverage/",
-  ".env",
-] as const;
+const FORBIDDEN_PREFIXES = ["node_modules/", "src/", "test/", "coverage/", ".env"] as const;
 
 function readJson(path: string): PackageJson {
   return JSON.parse(readFileSync(path, "utf8")) as PackageJson;
@@ -98,19 +110,13 @@ for (const pkg of PUBLISH_PACKAGES) {
     }
     const paths = listTarPaths(join(tmp, artifact));
     for (const required of pkg.required) {
-      const found = paths.some(
-        (p) => p.endsWith(`/${required}`) || p.endsWith(required),
-      );
+      const found = paths.some((p) => p.endsWith(`/${required}`) || p.endsWith(required));
       if (!found) {
         throw new Error(`${pkg.name}: tarball missing ${required}`);
       }
     }
     for (const forbidden of FORBIDDEN_PREFIXES) {
-      if (
-        paths.some(
-          (p) => p.includes(`/${forbidden}`) || p.startsWith(`package/${forbidden}`),
-        )
-      ) {
+      if (paths.some((p) => p.includes(`/${forbidden}`) || p.startsWith(`package/${forbidden}`))) {
         throw new Error(`${pkg.name}: tarball contains forbidden path prefix ${forbidden}`);
       }
     }
@@ -120,9 +126,7 @@ for (const pkg of PUBLISH_PACKAGES) {
 }
 
 if (versions.size !== 1) {
-  throw new Error(
-    `Publish packages must share one version; found: ${[...versions].join(", ")}`,
-  );
+  throw new Error(`Publish packages must share one version; found: ${[...versions].join(", ")}`);
 }
 
 const version = [...versions][0];

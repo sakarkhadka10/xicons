@@ -28,10 +28,7 @@ test("listIcons returns the bundled catalog", () => {
     assert.match(icon.variants.original, /viewBox=/);
     assert.equal(getIcon(icon.name), icon);
     assert.equal(getIcon(icon.name, "original")?.variants.original, icon.variants.original);
-    assert.equal(
-      getIconSvg(icon.name),
-      icon.variants.mono ?? icon.variants.original,
-    );
+    assert.equal(getIconSvg(icon.name), icon.variants.mono ?? icon.variants.original);
     assert.equal(getIconSvg(icon.name, "original"), icon.variants.original);
     assert.equal(hasIcon(icon.name), true);
 
@@ -81,7 +78,7 @@ test("getIconSvg returns original and mono markup", () => {
 
   assert.equal(getIconSvg("react"), mono);
   assert.equal(getIconSvg("react", "original"), original);
-  assert.match(original ?? "", /#61DAFB/);
+  assert.match(original ?? "", /#61DAFB/i);
   assert.match(mono ?? "", /currentColor/);
   assert.notEqual(original, mono);
   assert.equal(parseViewBox(original ?? ""), "0 0 24 24");

@@ -72,15 +72,15 @@ Use `variant="original"` for full-color artwork, or `variant="branded"` for badg
 
 ## Props
 
-| Prop        | Type                   | Default      | Description                                 |
-| ----------- | ---------------------- | ------------ | ------------------------------------------- |
-| `name`      | `string`               | required     | Icon name or registered alias               |
+| Prop        | Type                                | Default  | Description                                 |
+| ----------- | ----------------------------------- | -------- | ------------------------------------------- |
+| `name`      | `string`                            | required | Icon name or registered alias               |
 | `variant`   | `"original" \| "mono" \| "branded"` | `"mono"` | Icon variant                                |
-| `size`      | `number \| string`     | —            | Icon box size                               |
-| `color`     | `string`               | —            | Wrapper color; useful with monochrome icons |
-| `title`     | `string`               | —            | Accessible icon title                       |
-| `className` | `string`               | —            | CSS/Tailwind classes                        |
-| `style`     | `CSSProperties`        | —            | Inline styles                               |
+| `size`      | `number \| string`                  | —        | Icon box size                               |
+| `color`     | `string`                            | —        | Wrapper color; useful with monochrome icons |
+| `title`     | `string`                            | —        | Accessible icon title                       |
+| `className` | `string`                            | —        | CSS/Tailwind classes                        |
+| `style`     | `CSSProperties`                     | —        | Inline styles                               |
 
 ---
 

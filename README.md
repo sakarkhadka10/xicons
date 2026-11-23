@@ -6,9 +6,17 @@
 [![React Native](https://img.shields.io/npm/v/@axcore/xicons-react-native.svg)](https://www.npmjs.com/package/@axcore/xicons-react-native)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
-**Developer icons for React, React Native, and SVG URLs.**
+**12,000+ tree-shakable UI icons and developer brand icons for React, React Native, vanilla JS and SVG URLs.**
 
-One catalog. Two variants. Multiple runtimes.
+One catalog. Fully tree-shakable. Tailwind-ready.
+
+```tsx
+import { IconCamera } from "@axcore/xicons-react";
+
+<IconCamera className="size-5 text-sky-500" />;
+```
+
+See the [UI icons guide](./docs/ui-icons.md) for usage, bundle sizes and how to add icons.
 
 XIcons provides a single, validated icon source for modern applications, with support for **React**, **React Native / Expo**, direct **SVG access**, and a developer-friendly registry API.
 
@@ -173,10 +181,10 @@ The core package provides the underlying icon registry and utilities used by the
 
 ## Icon Registry
 
-Icons are defined from the `icons/` directory.
+Brand icons are defined in the `icons/brands/` directory.
 
 ```text
-icons/
+icons/brands/
 ├── react/
 │   ├── original.svg
 │   ├── mono.svg
@@ -320,7 +328,7 @@ All changes must go through a Pull Request and pass the required CI checks befor
 An icon normally contains:
 
 ```text
-icons/<icon-slug>/
+icons/brands/<icon-slug>/
 ├── original.svg
 ├── mono.svg
 └── metadata.json
@@ -399,8 +407,8 @@ xicons/
 ├── apps/
 │   └── cdn/                  @axcore/xicons-cdn (private)
 ├── icons/
-│   ├── react/
-│   └── nextjs/
+│   ├── brands/              developer brand icons (one folder each)
+│   └── ui/                  12k+ UI icons (one .svg each)
 ├── packages/
 │   ├── core/                 @axcore/xicons
 │   ├── react/                @axcore/xicons-react
@@ -431,6 +439,8 @@ Icon artwork may be subject to third-party trademarks, copyrights, licenses, and
 
 XIcons does not grant trademark rights to any depicted brand.
 
+License notices for adapted icon artwork: [icons/ui/THIRD_PARTY_LICENSES.md](./icons/ui/THIRD_PARTY_LICENSES.md).
+
 Contributors should review the [contribution and licensing guidelines](./CONTRIBUTING.md) before submitting third-party brand assets.
 
 ---
@@ -439,7 +449,7 @@ Contributors should review the [contribution and licensing guidelines](./CONTRIB
 
 XIcons is actively under development.
 
-The catalog currently ships `react` and `nextjs`. New icons are added only when the source file and its redistribution terms are linked in the pull request. See [Contributing](./CONTRIBUTING.md).
+The catalog ships 12,333 UI icons and a growing set of developer brand icons. New icons are added only when the source file and its redistribution terms are linked in the pull request. See [Contributing](./CONTRIBUTING.md).
 
 If you find a bug, want to request an icon, or have an idea for improving XIcons, please open an issue or Pull Request.
 
@@ -452,3 +462,23 @@ If XIcons is useful to you, consider contributing an icon, improving the documen
 Every contribution helps make the ecosystem better.
 
 **Built with ❤️ for developers.**
+
+---
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/sakarkhadka10"><img src="https://github.com/sakarkhadka10.png" width="80" alt=""/><br /><sub><b>sakarkhadka10</b></sub></a><br />💻 🎨 🚇 🚧 📖 ⚠️</td>
+  </tr>
+</table>
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+---
+
+## Community
+
+- [Contributing guide](./CONTRIBUTING.md): quick start, adding icons, pull requests
+- [Code of Conduct](./CODE_OF_CONDUCT.md)
+- [Security policy](./SECURITY.md)

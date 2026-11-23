@@ -3,21 +3,41 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
+      "outputs": ["dist/**", ".next/**"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/icons/**",
+        "$TURBO_ROOT$/scripts/build-ui-icons.ts"
+      ]
     },
     "dev": {
       "cache": false,
       "persistent": true
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/icons/**",
+        "$TURBO_ROOT$/scripts/build-ui-icons.ts"
+      ]
     },
     "typecheck": {
-      "dependsOn": ["build", "^build"]
+      "dependsOn": ["build", "^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/icons/**",
+        "$TURBO_ROOT$/scripts/build-ui-icons.ts"
+      ]
     },
     "test": {
       "dependsOn": ["build", "^build"],
-      "outputs": []
+      "outputs": [],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/icons/**",
+        "$TURBO_ROOT$/scripts/build-ui-icons.ts"
+      ]
     }
   }
 }

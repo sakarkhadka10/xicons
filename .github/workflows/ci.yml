@@ -39,6 +39,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Check icons and formatting
+        run: pnpm check
+
       - name: Validate
         run: pnpm validate
 

@@ -85,10 +85,8 @@ test("svg checks require viewBox, reject scripts, and require currentColor for m
     /currentColor/,
   );
   assert.doesNotThrow(() =>
-    assertSvg(
-      "demo/mono.svg",
-      '<svg viewBox="0 0 24 24"><path fill="currentColor"/></svg>',
-      { requireCurrentColor: true },
-    ),
+    assertSvg("demo/mono.svg", '<svg viewBox="0 0 24 24"><path fill="currentColor"/></svg>', {
+      requireCurrentColor: true,
+    }),
   );
 });

@@ -19,7 +19,7 @@ test("renders a known icon with svg attributes and the default variant", () => {
   assert.match(html, /width="100%"/);
   assert.match(html, /height="100%"/);
   assert.match(html, /currentColor/);
-  assert.doesNotMatch(html, /#61DAFB/);
+  assert.doesNotMatch(html, /#61DAFB/i);
   assert.match(html, /display:inline-flex/);
 });
 
@@ -34,10 +34,10 @@ test("renders original and mono variants", () => {
   const original = render({ name: "react", variant: "original" });
   const mono = render({ name: "react", variant: "mono" });
 
-  assert.match(original, /#61DAFB/);
+  assert.match(original, /#61DAFB/i);
   assert.doesNotMatch(original, /currentColor/);
   assert.match(mono, /currentColor/);
-  assert.doesNotMatch(mono, /#61DAFB/);
+  assert.doesNotMatch(mono, /#61DAFB/i);
 });
 
 test("unknown icons render nothing", () => {
@@ -64,7 +64,7 @@ test("applies size, className, color, and style", () => {
     variant: "original",
     color: "#112233",
   });
-  assert.match(originalTint, /#61DAFB/);
+  assert.match(originalTint, /#61DAFB/i);
   assert.match(originalTint, /color:#112233/);
 
   const overridden = render({

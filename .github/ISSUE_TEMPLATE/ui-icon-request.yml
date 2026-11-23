@@ -1,0 +1,25 @@
+name: UI icon request
+description: Request a new UI icon (outline / filled / duotone) or a redesign of an existing one.
+title: "[UI icon]: "
+labels: ["ui-icon"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Suggested name (kebab-case)
+      placeholder: cloud-sync
+    validations:
+      required: true
+  - type: textarea
+    id: use
+    attributes:
+      label: What is it for?
+      description: Describe the concept and where you would use it. Search icons/ui first, it may already exist under another name.
+    validations:
+      required: true
+  - type: dropdown
+    id: styles
+    attributes:
+      label: Styles needed
+      multiple: true
+      options: [outline, filled, duotone]

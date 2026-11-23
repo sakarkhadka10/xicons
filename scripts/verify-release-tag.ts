@@ -1,11 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-const PACKAGES = [
-  "packages/core",
-  "packages/react",
-  "packages/react-native",
-] as const;
+const PACKAGES = ["packages/core", "packages/react", "packages/react-native"] as const;
 
 interface PackageJson {
   readonly version?: string;

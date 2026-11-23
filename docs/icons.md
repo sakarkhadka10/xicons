@@ -1,12 +1,12 @@
 # Icon catalog
 
-Icons are added under `icons/{name}/` in the repository and compiled into `@axcore/xicons` at build time. This page lists **bundled names** in the current release line.
+Icons are added under `icons/brands/{name}/` in the repository and compiled into `@axcore/xicons` at build time. This page lists **bundled names** in the current release line.
 
 ## Available icons
 
-| Name | Title | Aliases | Variants |
-| --- | --- | --- | --- |
-| `react` | React | `reactjs` | original, mono |
+| Name     | Title   | Aliases           | Variants       |
+| -------- | ------- | ----------------- | -------------- |
+| `react`  | React   | `reactjs`         | original, mono |
 | `nextjs` | Next.js | `next`, `next.js` | original, mono |
 
 Lookup is case-insensitive. Update this table in the same pull request that adds an icon. It is maintained by hand.
@@ -32,12 +32,12 @@ node --input-type=module -e "import { listIcons } from './packages/core/dist/ind
 
 ## Variants
 
-| File | Role |
-| --- | --- |
-| `original.svg` | Full-color artwork on a transparent canvas (required) |
-| `mono.svg` | Single color via `currentColor` (optional; **default** for npm/React; falls back to `original`) |
-| `branded.svg` | Badge-style full-color artwork (optional; **default** for CDN; falls back to `original`) |
+| File           | Role                                                                                            |
+| -------------- | ----------------------------------------------------------------------------------------------- |
+| `original.svg` | Full-color artwork on a transparent canvas (required)                                           |
+| `mono.svg`     | Single color via `currentColor` (optional; **default** for npm/React; falls back to `original`) |
+| `branded.svg`  | Badge-style full-color artwork (optional; **default** for CDN; falls back to `original`)        |
 
 ## Adding icons
 
-See [Contributing](../CONTRIBUTING.md). Add files under `icons/{name}/`, run `pnpm validate`, and commit the regenerated `packages/core/src/icons.generated.ts` in the same pull request. Do not edit that file by hand.
+See [Contributing](../CONTRIBUTING.md). Add files under `icons/brands/{name}/`, run `pnpm validate`, and commit the regenerated `packages/core/src/icons.generated.ts` in the same pull request. Do not edit that file by hand.

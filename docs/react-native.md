@@ -34,18 +34,18 @@ export function Stack() {
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `name` | `string` | — | Icon id or alias (required) |
-| `variant` | `"original"` \| `"mono"` | `"original"` | Color style |
-| `size` | `number` | `24` | Width and height in density-independent pixels |
-| `color` | `string` | — | For `variant="mono"`, replaces `currentColor` in the SVG |
+| Prop      | Type                     | Default      | Description                                              |
+| --------- | ------------------------ | ------------ | -------------------------------------------------------- |
+| `name`    | `string`                 | —            | Icon id or alias (required)                              |
+| `variant` | `"original"` \| `"mono"` | `"original"` | Color style                                              |
+| `size`    | `number`                 | `24`         | Width and height in density-independent pixels           |
+| `color`   | `string`                 | —            | For `variant="mono"`, replaces `currentColor` in the SVG |
 
 Unknown icons return `null`.
 
 ## Colors
 
-- **`original`** — brand colors are baked into the SVG; `color` is ignored.  
+- **`original`** — brand colors are baked into the SVG; `color` is ignored.
 - **`mono`** — pass `color` to tint (implementation replaces `currentColor` in the markup).
 
 ## NativeWind / className

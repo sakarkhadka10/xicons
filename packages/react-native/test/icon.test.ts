@@ -37,10 +37,10 @@ test("renders original and mono variants", () => {
   const original = render({ name: "react", variant: "original" });
   const mono = render({ name: "react", variant: "mono" });
 
-  assert.match(original, /#61DAFB/);
+  assert.match(original, /#61DAFB/i);
   assert.doesNotMatch(original, /currentColor/);
   assert.match(mono, /currentColor/);
-  assert.doesNotMatch(mono, /#61DAFB/);
+  assert.doesNotMatch(mono, /#61DAFB/i);
 });
 
 test("unknown icons render nothing", () => {
@@ -55,10 +55,14 @@ test("uses a custom size", () => {
 
 test("applies color only to the mono variant", () => {
   const mono = render({ name: "react", variant: "mono", color: "#112233" });
-  assert.match(mono, /#112233/);
+  assert.match(mono, /#112233/i);
   assert.doesNotMatch(mono, /currentColor/);
 
-  const original = render({ name: "react", variant: "original", color: "#112233" });
-  assert.match(original, /#61DAFB/);
-  assert.doesNotMatch(original, /#112233/);
+  const original = render({
+    name: "react",
+    variant: "original",
+    color: "#112233",
+  });
+  assert.match(original, /#61DAFB/i);
+  assert.doesNotMatch(original, /#112233/i);
 });

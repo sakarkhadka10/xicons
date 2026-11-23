@@ -2,55 +2,58 @@
   "name": "@axcore/xicons-react-native",
   "version": "0.1.3",
   "description": "React Native and Expo Icon component for XIcons.",
+  "keywords": [
+    "axcore",
+    "expo",
+    "icons",
+    "react-native",
+    "svg",
+    "xicons"
+  ],
+  "homepage": "https://github.com/sakarkhadka10/xicons/tree/main/packages/react-native#readme",
+  "bugs": {
+    "url": "https://github.com/sakarkhadka10/xicons/issues"
+  },
   "license": "MIT",
-  "type": "module",
+  "author": "sakarkhadka10 (https://github.com/sakarkhadka10)",
+  "contributors": [
+    "sakarkhadka10 (https://github.com/sakarkhadka10)"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sakarkhadka10/xicons.git",
     "directory": "packages/react-native"
   },
-  "bugs": {
-    "url": "https://github.com/sakarkhadka10/xicons/issues"
-  },
-  "homepage": "https://github.com/sakarkhadka10/xicons/tree/main/packages/react-native#readme",
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
-  },
-  "engines": {
-    "node": ">=22.0.0"
-  },
   "files": [
     "dist",
     "README.md"
   ],
-  "keywords": [
-    "icons",
-    "react-native",
-    "expo",
-    "svg",
-    "xicons",
-    "axcore"
-  ],
-  "peerDependencies": {
-    "react": "^19.3.1",
-    "react-native": ">=0.78"
-  },
-  "dependencies": {
-    "@axcore/xicons": "workspace:*",
-    "react-native-svg": ">=15"
-  },
+  "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./icons": {
+      "types": "./dist/icons.d.ts",
+      "import": "./dist/icons.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && tsx ../../scripts/build-ui-icons.ts jsx",
     "lint": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit",
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit",
-    "test": "tsc -p tsconfig.json && node --import tsx --test test/*.test.ts"
+    "test": "node --import tsx --test test/*.test.ts"
+  },
+  "dependencies": {
+    "@axcore/xicons": "workspace:*",
+    "react-native-svg": ">=15"
   },
   "devDependencies": {
     "@types/react": "^19.3.0",
@@ -58,5 +61,12 @@
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "tsx": "^4.20.6"
+  },
+  "peerDependencies": {
+    "react": "^19.3.1",
+    "react-native": ">=0.78"
+  },
+  "engines": {
+    "node": ">=22.0.0"
   }
 }

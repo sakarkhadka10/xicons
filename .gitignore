@@ -1,14 +1,57 @@
+# Dependencies
 node_modules/
 .pnpm-store/
-.turbo/
+
+# Build output and caches
 dist/
 build/
-coverage/
+out/
+.turbo/
+.cache/
 .next/
 .expo/
+.wrangler/
+.vercel/
+.netlify/
+*.tsbuildinfo
+
+# Packed tarballs (pnpm pack / npm pack)
+*.tgz
+
+# Tests and coverage
+coverage/
+*.lcov
+.nyc_output/
+
+# Logs
 *.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment and secrets: never commit these
 .env
 .env.*
 !.env.example
+*.local
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+.npmrc.local
+
+# Editors: share only the recommended extensions
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
 .DS_Store
-*.tsbuildinfo
+._*
+Thumbs.db
+desktop.ini

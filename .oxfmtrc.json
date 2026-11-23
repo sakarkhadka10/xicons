@@ -1,0 +1,4 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "ignorePatterns": ["icons/ui/**", "pnpm-lock.yaml", "packages/core/src/icons.generated.ts"]
+}

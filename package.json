@@ -1,35 +1,42 @@
 {
   "name": "xicons",
-  "private": true,
   "version": "0.1.0",
+  "private": true,
   "description": "Open-source developer icon ecosystem by AXCore.",
   "license": "MIT",
-  "packageManager": "pnpm@12.10.1",
-  "engines": {
-    "node": ">=22.0.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sakarkhadka10/xicons.git"
   },
+  "type": "module",
   "scripts": {
     "prepare": "husky",
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
+    "lint": "oxlint && turbo run lint",
     "typecheck": "turbo run typecheck && tsc -p tsconfig.scripts.json",
     "test": "turbo run test",
     "validate": "pnpm --filter @axcore/xicons-icon-validator validate && pnpm typecheck && pnpm lint && pnpm test",
     "pack:verify": "tsx scripts/verify-publish-readiness.ts",
     "publish:dry-run": "tsx scripts/publish-dry-run.ts",
-    "format": "prettier --write ."
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sakarkhadka10/xicons.git"
+    "format": "oxfmt",
+    "icons:add": "tsx scripts/add-icon.ts",
+    "icons:check": "tsx scripts/add-icon.ts --check",
+    "format:check": "oxfmt --check",
+    "check": "pnpm --filter @axcore/xicons-icon-validator validate && pnpm icons:check && oxlint && pnpm format:check"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
     "husky": "^9.1.7",
-    "prettier": "3.10.1",
-    "turbo": "2.11.11",
+    "oxfmt": "0.79.0",
+    "oxlint": "1.94.0",
+    "svgo": "4.1.0",
     "tsx": "^4.20.6",
+    "turbo": "2.11.11",
     "typescript": "7.0.2"
-  }
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "packageManager": "pnpm@12.10.1"
 }

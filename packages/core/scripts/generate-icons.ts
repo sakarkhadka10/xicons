@@ -11,11 +11,9 @@ import {
 } from "./validate-icon.js";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const iconsRoot = join(here, "../../../icons");
+const iconsRoot = join(here, "../../../icons/brands");
 const outFile = join(here, "../src/icons.generated.ts");
-const categories = parseIconCategories(
-  await readFile(join(here, "../src/categories.ts"), "utf8"),
-);
+const categories = parseIconCategories(await readFile(join(here, "../src/categories.ts"), "utf8"));
 
 const VARIANTS = ["original", "mono", "branded"] as const;
 
@@ -110,6 +108,4 @@ const lines = [
 ];
 
 await writeFile(outFile, lines.join("\n"), "utf8");
-console.log(
-  `Generated ${Object.keys(icons).length} icon(s) → src/icons.generated.ts`,
-);
+console.log(`Generated ${Object.keys(icons).length} icon(s) → src/icons.generated.ts`);

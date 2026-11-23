@@ -243,7 +243,7 @@ Example:
 import type { IconDefinition, IconVariant } from "@axcore/xicons";
 ```
 
-`IconName` is a `string`. The package does not generate a union of icon ids. Canonical names and aliases come from `icons/*/metadata.json`.
+`IconName` is a `string`. The package does not generate a union of icon ids. Canonical names and aliases come from `icons/brands/*/metadata.json`.
 
 Allowed categories are also exported at runtime:
 
@@ -280,7 +280,7 @@ rather than interacting with the core registry directly.
 The XIcons icon catalog is maintained in the main repository:
 
 ```text
-icons/
+icons/brands/
 ├── react/
 │   ├── original.svg
 │   ├── mono.svg

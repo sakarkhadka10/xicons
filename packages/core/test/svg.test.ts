@@ -3,14 +3,8 @@ import { test } from "node:test";
 import { escapeXml, parseViewBox, stripSvgWrapper } from "../src/index.js";
 
 test("parseViewBox reads double quotes, single quotes, and the fallback", () => {
-  assert.equal(
-    parseViewBox('<svg viewBox="0 0 24 24"></svg>'),
-    "0 0 24 24",
-  );
-  assert.equal(
-    parseViewBox("<svg viewBox='0 0 32 32'></svg>"),
-    "0 0 32 32",
-  );
+  assert.equal(parseViewBox('<svg viewBox="0 0 24 24"></svg>'), "0 0 24 24");
+  assert.equal(parseViewBox("<svg viewBox='0 0 32 32'></svg>"), "0 0 32 32");
   assert.equal(parseViewBox("<svg></svg>"), "0 0 24 24");
   assert.equal(parseViewBox("<svg></svg>", "0 0 16 16"), "0 0 16 16");
   assert.equal(parseViewBox("0 0 24 24"), "0 0 24 24");
